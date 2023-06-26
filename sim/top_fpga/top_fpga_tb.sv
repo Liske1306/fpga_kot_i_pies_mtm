@@ -39,6 +39,7 @@ localparam CLK_PERIOD = 10;     // 100 MHz
 logic clk, rst;
 wire pclk;
 wire vs, hs;
+wire PS2Data, PS2Clk;
 wire [3:0] r, g, b;
 
 
@@ -64,7 +65,9 @@ top_vga_basys3 dut (
     .vgaRed(r),
     .vgaGreen(g),
     .vgaBlue(b),
-    .JA1(pclk)
+    .JA1(pclk),
+    .PS2Clk(PS2Clk),
+    .PS2Data(PS2Data)
 );
 
 tiff_writer #(

@@ -12,12 +12,7 @@
 module vga_timing (
     input  logic clk,
     input  logic rst,
-    output logic [10:0] vcount,
-    output logic vsync,
-    output logic vblnk,
-    output logic [10:0] hcount,
-    output logic hsync,
-    output logic hblnk
+    vga_if.out out
 );
 
 import vga_pkg::*;
@@ -38,90 +33,109 @@ import vga_pkg::*;
 
 logic [10:0] hcount_nxt;
 logic [10:0] vcount_nxt;
+logic vblnk_nxt;
+logic hblnk_nxt;
+logic hsync_nxt;
+logic vsync_nxt;
 
 always_ff @(posedge clk)
 begin
-    hcount<=hcount_nxt;
-    vcount<=vcount_nxt; 
-end
-
-always_comb
-begin
     if(rst)
-    begin
-    hcount_nxt ='0;
-    vcount_nxt ='0;
+    begin 
+        out.hcount<='0;
+        out.vcount<='0;
+        out.vblnk<='0;
+        out.hblnk<='0;
+        out.hsync<='0;
+        out.vsync<='0;
+        out.rgb<=12'h0_0_0;
     end
     else
     begin
-        if(hcount==1055)
-        begin
-            hcount_nxt='0;
-            if (vcount==627)
-            begin
-                vcount_nxt='0;
-            end
-            else
-            begin
-                vcount_nxt=vcount+1;
-            end
-        end
-        else
-        begin
-            hcount_nxt=hcount+1;
-            vcount_nxt=vcount;
-        end
+        out.hcount<=hcount_nxt;
+        out.vcount<=vcount_nxt; 
+        out.vsync<=vsync_nxt; 
+        out.hsync<=hsync_nxt; 
+        out.hblnk<=hblnk_nxt; 
+        out.vblnk<=vblnk_nxt;
+        out.rgb  <=12'h0_0_0; 
     end
 end
 
 always_comb
 begin
-    if (rst) 
+    if(out.hcount==1055)
     begin
-        hblnk = 0;
-        hsync = 0;
-        vblnk = 0;
-        vsync = 0;
+        hcount_nxt='0;
     end
-    else 
+    else
     begin
-        if(hcount > 838 && hcount < 967)
+        hcount_nxt=out.hcount+1;
+    end
+    if(out.hcount==1055)
+    begin
+        if (out.vcount==627)
         begin
-            hsync = 1;
+            vcount_nxt='0;
         end
         else
         begin
-            hsync = 0;
+            vcount_nxt=out.vcount+1;
         end
-
-        if (vcount > 599 && vcount<605)
-        begin
-            vsync = 1;
-        end
-        else
-        begin
-            vsync = 0;
-        end
-
-        if(hcount > 799 && hcount<1056)
-        begin
-            hblnk = 1;
-        end
-        else
-        begin
-            hblnk = 0;
-        end
-
-        if (vcount>599 && vcount<628)
-        begin
-            vblnk = 1;
-        end
-        else
-        begin
-            vblnk = 0;
-        end
-    end 
+    end
+    else
+    begin
+        vcount_nxt=out.vcount;
+    end
 end
+
+always_comb
+begin
+    if(out.hcount >= HOR_SYNC_START-1 && out.hcount <= HOR_SYNC_END-1)
+    begin
+        hsync_nxt = 1;
+    end
+    else
+    begin
+        hsync_nxt = 0;
+    end
+
+    if(out.hcount==1055)
+    begin
+        if (out.vcount >= VER_SYNC_START-1 && out.vcount<=VER_SYNC_END-1)
+        begin
+            vsync_nxt = 1;
+        end
+        else
+        begin
+            vsync_nxt = 0;
+        end
+
+        if (out.vcount>=VER_BLANK_START-1 && out.vcount<=VER_BLANK_END-1)
+        begin
+            vblnk_nxt = 1;
+        end
+        else
+        begin
+            vblnk_nxt = 0;
+        end
+    end
+    else
+    begin
+        vsync_nxt=out.vsync;
+        vblnk_nxt=out.vblnk;
+    end
+
+    if(out.hcount >= HOR_BLANK_START-1 && out.hcount<=HOR_BLANK_END-1)
+    begin
+        hblnk_nxt = 1;
+    end
+    else
+    begin
+        hblnk_nxt = 0;
+    end
+end 
+
 
 
 endmodule

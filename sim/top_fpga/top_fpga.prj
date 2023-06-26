@@ -12,10 +12,25 @@
 sv work ../../rtl/vga_pkg.sv \
         ../../rtl/vga_timing.sv \
         ../../rtl/draw_bg.sv \
+        ../../rtl/draw_rect.sv \
+        ../../rtl/draw_rect_char.sv \
+        ../../rtl/draw_rect_ctl.sv \
+        ../../rtl/draw_mouse.sv \
         ../../rtl/top_vga.sv \
+        ../../rtl/bufor100_40.sv \
+        ../../rtl/vga_if.sv \
+        ../../rtl/image_rom.sv \
+        ../../rtl/font_rom.v \
+        ../../rtl/char_rom_16x16.sv \
         ../../fpga/rtl/top_vga_basys3.sv \
+        ../../fpga/rtl/clk_wiz_0.v \
+        ../../fpga/rtl/clk_wiz_0_clk_wiz.v  \
         ../common/tiff_writer.sv \
         top_fpga_tb.sv
+
+vhdl work ../../rtl/MouseCtl.vhd \
+          ../../rtl/MouseDisplay.vhd \
+          ../../fpga/rtl/Ps2Interface.vhd 
 
 # compile glbl module - required for IP simulation
 verilog work ../common/glbl.v

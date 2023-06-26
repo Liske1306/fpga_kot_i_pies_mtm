@@ -27,11 +27,7 @@ localparam CLK_PERIOD = 25;     // 40 MHz
 
 logic clk;
 logic rst;
-
-wire [10:0] vcount, hcount;
-wire        vsync,  hsync;
-wire        vblnk,  hblnk;
-
+vga_if tim_out_if();
 
 /**
  * Clock generation
@@ -62,12 +58,7 @@ end
 vga_timing dut(
     .clk,
     .rst,
-    .vcount,
-    .vsync,
-    .vblnk,
-    .hcount,
-    .hsync,
-    .hblnk
+    .out(tim_out_if)
 );
 
 /**
@@ -82,7 +73,33 @@ vga_timing dut(
  */
 
 // Here you can declare concurrent assertions (assert property).
+assert property (@(posedge clk)(tim_out_if.hcount>=HOR_SYNC_START && tim_out_if.hcount <= HOR_SYNC_END) |-> tim_out_if.hsync==1)
+else
+begin
+    $error("hsync dont work");
+    $stop;
+end
 
+assert property (@(posedge clk)(tim_out_if.hcount>=HOR_BLANK_START && tim_out_if.hcount <= HOR_BLANK_END) |-> tim_out_if.hblnk==1)
+else
+begin
+    $error("hblnk dont work");
+    $stop;
+end
+
+assert property (@(posedge clk)(tim_out_if.vcount >= VER_SYNC_START && tim_out_if.vcount<=VER_SYNC_END) |-> tim_out_if.vsync==1)
+else
+begin
+    $error("vsync dont work");
+    $stop;
+end
+
+assert property (@(posedge clk)(tim_out_if.vcount >= VER_BLANK_START && tim_out_if.vcount<=VER_BLANK_END) |-> tim_out_if.vblnk==1)
+else
+begin
+    $error("vblnk dont work");
+    $stop;
+end
 
 /**
  * Main test
@@ -92,10 +109,10 @@ initial begin
     @(posedge rst);
     @(negedge rst);
 
-    wait (vsync == 1'b0);
-    @(negedge vsync)
-    @(negedge vsync)
-
+    wait (tim_out_if.vsync == 1'b0);
+    @(negedge tim_out_if.vsync)
+    @(negedge tim_out_if.vsync)
+    $display("No errors detected!");
     $finish;
 end
 

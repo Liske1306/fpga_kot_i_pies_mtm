@@ -15,39 +15,50 @@
 `timescale 1 ns / 1 ps
 
 module top_vga (
-    input  logic clk,
+    input  logic clk40MHz,
+    input  logic clk100MHz,
     input  logic rst,
     output logic vs,
     output logic hs,
     output logic [3:0] r,
     output logic [3:0] g,
-    output logic [3:0] b
+    output logic [3:0] b,
+    inout  wire  ps2_clk,
+    inout  wire  ps2_data
 );
-
 
 /**
  * Local variables and signals
  */
+logic [11:0] xpos;
+logic [11:0] ypos;
+logic [11:0] xpos_temp;
+logic [11:0] ypos_temp;
+logic [11:0] rect_xpos;
+logic [11:0] rect_ypos;
+logic [11:0] address;
+logic [11:0] rgb;
+logic [10:0] addr;
+logic [7:0] pixels;
+logic [7:0] char_xy;
+logic [6:0] char_code;
+logic [3:0] char_line;
+logic left_click;
 
-// VGA signals from timing
-wire [10:0] vcount_tim, hcount_tim;
-wire vsync_tim, hsync_tim;
-wire vblnk_tim, hblnk_tim;
-
-// VGA signals from background
-wire [10:0] vcount_bg, hcount_bg;
-wire vsync_bg, hsync_bg;
-wire vblnk_bg, hblnk_bg;
-wire [11:0] rgb_bg;
-
+//VGA interfaces
+vga_if tim_bg_if();
+vga_if bg_char_if();
+vga_if char_rect_if();
+vga_if rect_mouse_if();
+vga_if mouse_out_if();
 
 /**
  * Signals assignments
  */
 
-assign vs = vsync_bg;
-assign hs = hsync_bg;
-assign {r,g,b} = rgb_bg;
+assign vs = mouse_out_if.vsync;
+assign hs = mouse_out_if.hsync;
+assign {r,g,b} = mouse_out_if.rgb;
 
 
 /**
@@ -55,35 +66,92 @@ assign {r,g,b} = rgb_bg;
  */
 
 vga_timing u_vga_timing (
-    .clk,
+    .clk(clk40MHz),
     .rst,
-    .vcount (vcount_tim),
-    .vsync  (vsync_tim),
-    .vblnk  (vblnk_tim),
-    .hcount (hcount_tim),
-    .hsync  (hsync_tim),
-    .hblnk  (hblnk_tim)
+    .out(tim_bg_if)
 );
 
 draw_bg u_draw_bg (
-    .clk,
+    .clk(clk40MHz),
     .rst,
+    .in(tim_bg_if),
+    .out(bg_char_if)
+);
 
-    .vcount_in  (vcount_tim),
-    .vsync_in   (vsync_tim),
-    .vblnk_in   (vblnk_tim),
-    .hcount_in  (hcount_tim),
-    .hsync_in   (hsync_tim),
-    .hblnk_in   (hblnk_tim),
+draw_rect_char u_draw_rect_char (
+    .clk(clk40MHz),
+    .rst,
+    .char_pixels(pixels),
+    .in(bg_char_if),
+    .out(char_rect_if),
+    .char_line(char_line),
+    .char_xy(char_xy)
+);
 
-    .vcount_out (vcount_bg),
-    .vsync_out  (vsync_bg),
-    .vblnk_out  (vblnk_bg),
-    .hcount_out (hcount_bg),
-    .hsync_out  (hsync_bg),
-    .hblnk_out  (hblnk_bg),
+char_rom_16x16 u_char_rom_16x16 (
+    .clk(clk40MHz),
+    .char_xy(char_xy),
+    .char_code(char_code)
+);
 
-    .rgb_out    (rgb_bg)
+font_rom u_font_rom (
+    .clk(clk40MHz),
+    .addr({char_code,char_line}),
+    .char_line_pixels(pixels)
+);
+
+MouseCtl u_MouseCtl (
+    .clk(clk100MHz),
+    .rst,
+    .ps2_clk(ps2_clk),
+    .ps2_data(ps2_data),
+    .xpos(xpos_temp),
+    .ypos(ypos_temp),
+    .left(left_click)
+    );
+
+bufor100_40 u_bufor100_40(
+    .clk(clk40MHz),
+    .xpos_nxt(xpos_temp),
+    .ypos_nxt(ypos_temp),
+    .xpos(xpos),
+    .ypos(ypos)
+);
+
+draw_rect_ctl u_draw_rect_ctl(
+    .clk(clk40MHz),
+    .rst,
+    .mouse_left(left_click),
+    .mouse_xpos(xpos),
+    .mouse_ypos(ypos),
+    .xpos(rect_xpos),
+    .ypos(rect_ypos)
+);
+
+draw_rect u_draw_rect (
+    .clk(clk40MHz),
+    .rst,
+    .rgb_pixel(rgb),
+    .xpos(rect_xpos),
+    .ypos(rect_ypos),
+    .in(char_rect_if),
+    .out(rect_mouse_if),
+    .pixel_addr(address)
+);
+
+image_rom u_image_rom(
+    .clk(clk40MHz),
+    .address,
+    .rgb
+);
+
+draw_mouse u_draw_mouse (
+    .clk(clk40MHz),
+    .rst,
+    .xpos(xpos),
+    .ypos(ypos),
+    .in(rect_mouse_if),
+    .out(mouse_out_if)
 );
 
 endmodule

@@ -22,7 +22,7 @@
 
 `timescale 1 ns / 1 ps
 
-module top_vga_tb;
+module rect_ctl_tb;
 
 
 /**
@@ -30,60 +30,40 @@ module top_vga_tb;
  */
 
 localparam CLK_PERIOD_40 = 25;     // 40 MHz
-localparam CLK_PERIOD_100 = 10;     // 100 MHz
-
 
 /**
  * Local variables and signals
  */
 
-logic clk40MHz,clk100MHz, rst;
-wire vs, hs;
-wire ps2_data, ps2_clk;
-wire [3:0] r, g, b;
-
+logic clk;
+logic rst;
+logic left;
+logic [11:0]xpos = '0;
+logic [11:0]ypos = '0;
+logic [11:0]rect_xpos;
+logic [11:0]rect_ypos;
 
 /**
  * Clock generation
  */
 
 initial begin
-    clk40MHz = 1'b0;
-    forever #(CLK_PERIOD_40/2) clk40MHz = ~clk40MHz;
-end
-
-initial begin
-    clk100MHz = 1'b0;
-    forever #(CLK_PERIOD_100/2) clk100MHz = ~clk100MHz;
+    clk = 1'b0;
+    forever #(CLK_PERIOD_40/2) clk = ~clk;
 end
 
 /**
  * Submodules instances
  */
 
-top_vga dut (
-    .clk40MHz(clk40MHz),
-    .clk100MHz(clk100MHz),
-    .rst(rst),
-    .vs(vs),
-    .hs(hs),
-    .r(r),
-    .g(g),
-    .b(b),
-    .ps2_clk(ps2_clk),
-    .ps2_data(ps2_data)
-);
-
-tiff_writer #(
-    .XDIM(16'd1056),
-    .YDIM(16'd628),
-    .FILE_DIR("../../results")
-) u_tiff_writer (
-    .clk(clk40MHz),
-    .r({r,r}), // fabricate an 8-bit value
-    .g({g,g}), // fabricate an 8-bit value
-    .b({b,b}), // fabricate an 8-bit value
-    .go(vs)
+draw_rect_ctl dut(
+    .clk(clk),
+    .rst,
+    .mouse_left(left),
+    .mouse_xpos(xpos),
+    .mouse_ypos(ypos),
+    .xpos(rect_xpos),
+    .ypos(rect_ypos)
 );
 
 
@@ -95,15 +75,15 @@ initial begin
     rst = 1'b0;
     # 30 rst = 1'b1;
     # 30 rst = 1'b0;
-
-    $display("If simulation ends before the testbench");
-    $display("completes, use the menu option to run all.");
-    $display("Prepare to wait a long time...");
-
-    wait (vs == 1'b0);
-    @(negedge vs) $display("Info: negedge VS at %t",$time);
-    @(negedge vs) $display("Info: negedge VS at %t",$time);
-
+    # 30 left = 1'b0;
+    # 30 left = 1'b1;
+    # 30 left = 1'b0;
+    #1000000 rst = 1'b0;
+    # 30 rst = 1'b1;
+    # 30 rst = 1'b0;
+    # 30 left = 1'b0;
+    # 30 left = 1'b1;
+    # 30 left = 1'b0;
     // End the simulation.
     $display("Simulation is over, check the waveforms.");
     $finish;
