@@ -17,42 +17,23 @@
 module top_vga_basys3 (
     input  wire clk,
     input  wire btnC,
+    input  wire [1:0] sw,
+    input  wire [7:0] JB,
+    output wire [1:0] led,
     output wire Vsync,
     output wire Hsync,
     output wire [3:0] vgaRed,
     output wire [3:0] vgaGreen,
     output wire [3:0] vgaBlue,
-    output wire JA1,
+    output wire [7:0] JA,
     inout  wire PS2Clk,
     inout  wire PS2Data
 );
 
-
-/**
- * Local variables and signals
- */
 wire locked;
-wire pclk_mirror;
-
-(* KEEP = "TRUE" *)
-(* ASYNC_REG = "TRUE" *)
-logic [7:0] safe_start = 0;
 logic clk100MHz;
 logic clk40MHz;
-// For details on synthesis attributes used above, see AMD Xilinx UG 901:
-// https://docs.xilinx.com/r/en-US/ug901-vivado-synthesis/Synthesis-Attributes
 
-
-/**
- * Signals assignments
- */
-
-assign JA1 = pclk_mirror;
-
-
-/**
- * FPGA submodules placement
- */
 clk_wiz_0 my_clk_wiz_0(
      .clk100MHz(clk100MHz),
      .clk40MHz(clk40MHz),
@@ -60,28 +41,22 @@ clk_wiz_0 my_clk_wiz_0(
      .clk(clk)
     );
 
-// Mirror pclk on a pin for use by the testbench;
-// not functionally required for this design to work.
-
-ODDR pclk_oddr (
-    .Q(pclk_mirror),
-    .C(clk40MHz),
-    .CE(1'b1),
-    .D1(1'b1),
-    .D2(1'b0),
-    .R(1'b0),
-    .S(1'b0)
-);
-
-
-/**
- *  Project functional top module
- */
-
-top_vga u_top_vga (
+top u_top (
     .clk40MHz(clk40MHz),
     .clk100MHz(clk100MHz),
     .rst(btnC),
+    .player1_choose(sw[1]),
+    .player2_choose(sw[0]),
+    .player1_led(led[1]),
+    .player2_led(led[0]),
+    .in_player1_ready(JB[6]),
+    .out_player1_ready(JA[6]),
+    .in_player2_ready(JB[5]),
+    .out_player2_ready(JA[5]),
+    .in_power(JB[4:0]),
+    .out_power(JA[4:0]),
+    .in_throw_flag(JB[7]),
+    .out_throw_flag(JA[7]),
     .r(vgaRed),
     .g(vgaGreen),
     .b(vgaBlue),

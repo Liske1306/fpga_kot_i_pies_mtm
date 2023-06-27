@@ -7,7 +7,7 @@
  * Package with vga related constants.
  */
 
-package vga_pkg;
+package variable_pkg;
 
 // Parameters for VGA Display 800 x 600 @ 60fps using a 40 MHz clock;
 localparam HOR_PIXELS = 800;
@@ -32,6 +32,9 @@ localparam RECT_FONT_SIGNS_Y= 16;
 localparam RECT_FONT_XPOS= 203;
 localparam RECT_FONT_YPOS= 22;
 
-// Add VGA timing parameters here and refer to them in other modules.
-
+//Players
+localparam PLAYER_1 = 1;
+localparam PLAYER_2 = 0;
+localparam OFF = 1;
+localparam ON = 0;
 endpackage
