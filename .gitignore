@@ -14,6 +14,8 @@ fpga/xelab*
 fpga/xsim*
 fpga/.hbs
 
+results/*
+
 sim/build
 sim/.Xil
 sim/vivado*

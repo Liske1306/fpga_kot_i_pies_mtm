@@ -35,8 +35,11 @@ set xdc_files {
 set sv_files {
     ../rtl/top.sv
     ../rtl/variable_pkg.sv
-    ../rtl/init.sv
-    ../rtl/pmod_if.sv
+    ../rtl/choose_player.sv
+    ../rtl/set_wind.sv
+    ../rtl/throw.sv
+    ../rtl/turn_manager.sv
+    ../rtl/bufor100_40.sv
     rtl/top_fpga.sv
 }
 
@@ -49,6 +52,7 @@ set verilog_files {
 # Specify VHDL design files location            -- EDIT
 set vhdl_files {
     rtl/Ps2Interface.vhd
+    ../rtl/MouseCtl.vhd
 }
 
 # Specify files for a memory initialization     -- EDIT

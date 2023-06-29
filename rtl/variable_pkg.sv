@@ -37,4 +37,8 @@ localparam PLAYER_1 = 1;
 localparam PLAYER_2 = 0;
 localparam OFF = 1;
 localparam ON = 0;
+
+//Gameplay
+localparam HIT = 288;
+localparam FENCE = 384;
 endpackage
