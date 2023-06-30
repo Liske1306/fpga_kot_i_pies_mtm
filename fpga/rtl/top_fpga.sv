@@ -32,17 +32,17 @@ module top_vga_basys3 (
 
 wire locked;
 logic clk100MHz;
-logic clk40MHz;
+logic clk60MHz;
 
 clk_wiz_0 my_clk_wiz_0(
      .clk100MHz(clk100MHz),
-     .clk40MHz(clk40MHz),
+     .clk60MHz(clk60MHz),
      .locked(locked),
      .clk(clk)
     );
 
 top u_top (
-    .clk40MHz(clk40MHz),
+    .clk60MHz(clk60MHz),
     .clk100MHz(clk100MHz),
     .rst(btnC),
     .player1_choose(sw[1]),

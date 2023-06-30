@@ -1,6 +1,6 @@
 `timescale 1 ns / 1 ps
 
-module bufor100_40(
+module bufor100_60(
     input clk,
     input logic [11:0] xpos_nxt,
     input logic [11:0] ypos_nxt,

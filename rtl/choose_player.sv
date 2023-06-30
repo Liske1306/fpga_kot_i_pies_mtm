@@ -1,7 +1,7 @@
 `timescale 1 ns / 1 ps
 
 module choose_player(
-    input  logic clk40MHz,
+    input  logic clk60MHz,
     input  logic rst,
     input  logic in_player1_ready,
     input  logic in_player2_ready,
@@ -24,7 +24,7 @@ enum logic {
     CHOOSE_PLAYER = 1'b1
 } state, state_nxt;
 
-always_ff @(posedge clk40MHz) begin
+always_ff @(posedge clk60MHz) begin
     if(rst) begin
         player1_led       <= OFF;
         player2_led       <= OFF;
