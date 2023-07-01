@@ -39,7 +39,10 @@ set sv_files {
     ../rtl/set_wind.sv
     ../rtl/throw.sv
     ../rtl/turn_manager.sv
-    ../rtl/bufor100_40.sv
+    ../rtl/bufor100_60.sv
+    ../rtl/draw_background.sv
+    ../rtl/vga_if.sv
+    ../rtl/vga_timing.sv
     rtl/top_fpga.sv
 }
 

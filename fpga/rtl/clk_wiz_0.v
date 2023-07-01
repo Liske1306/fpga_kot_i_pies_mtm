@@ -57,7 +57,7 @@
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
 //----------------------------------------------------------------------------
 // clk100MHz__100.00000______0.000______50.0______130.958_____98.575
-// clk40MHz__40.00000______0.000______50.0______159.371_____98.575
+// clk60MHz__40.00000______0.000______50.0______159.371_____98.575
 //
 //----------------------------------------------------------------------------
 // Input Clock   Freq (MHz)    Input Jitter (UI)
@@ -72,7 +72,7 @@ module clk_wiz_0
  (
   // Clock out ports
   output        clk100MHz,
-  output        clk40MHz,
+  output        clk60MHz,
   // Status and control signals
   output        locked,
  // Clock in ports
@@ -83,7 +83,7 @@ module clk_wiz_0
   (
   // Clock out ports  
   .clk100MHz(clk100MHz),
-  .clk40MHz(clk40MHz),
+  .clk60MHz(clk60MHz),
   // Status and control signals               
   .locked(locked),
  // Clock in ports

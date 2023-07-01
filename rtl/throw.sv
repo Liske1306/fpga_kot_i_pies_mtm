@@ -1,7 +1,7 @@
 `timescale 1 ns / 1 ps
 
 module throw(
-    input  logic clk40MHz,
+    input  logic clk60MHz,
     input  logic rst,
     input  logic left,
     input  logic turn,
@@ -24,7 +24,7 @@ enum logic [1:0]{
     HOLD = 2'b10
 } state, state_nxt;
 
-always_ff @(posedge clk40MHz) begin
+always_ff @(posedge clk60MHz) begin
     if(rst) begin
         power      <= '0;
         state      <= WAIT;
@@ -61,7 +61,7 @@ always_comb begin
             end
             else begin
                 state_nxt = UPDATE;
-                if(counter >= 1880000) begin
+                if(counter >= 2820000) begin
                     power_nxt = power + 1;
                     counter_nxt = '0;
                 end

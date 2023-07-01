@@ -1,7 +1,7 @@
 `timescale 1 ns / 1 ps
 
 module turn_manager(
-    input  logic clk40MHz,
+    input  logic clk60MHz,
     input  logic rst,
     input  logic in_throw_flag,
     input  logic throw_flag,
@@ -14,7 +14,7 @@ import variable_pkg::*;
 logic [2:0] turn_nxt;
 logic throw_flag_pre, in_throw_flag_pre;
 
-always_ff @(posedge clk40MHz) begin
+always_ff @(posedge clk60MHz) begin
     if(rst) begin
         turn <= 3'b001;
         throw_flag_pre <= OFF;

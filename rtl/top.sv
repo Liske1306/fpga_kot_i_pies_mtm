@@ -15,7 +15,7 @@
  `timescale 1 ns / 1 ps
 
 module top(
-    input  logic clk40MHz,
+    input  logic clk60MHz,
     input  logic clk100MHz,
     input  logic rst,
     input  logic player1_choose,
@@ -47,11 +47,17 @@ logic [2:0] wind, turn;
 logic [4:0] power;
 logic [11:0] xpos, ypos, xpos_prebuff, ypos_prebuff;
 
+vga_if vga_if_timing();
+vga_if vga_if_background();
+
+assign vs = vga_if_background.vsync;
+assign hs = vga_if_background.hsync;
+assign {r,g,b} = vga_if_background.rgb;
 assign out_throw_flag = throw_flag;
 assign out_power = power;
 
 choose_player u_choose_player(
-    .clk40MHz,
+    .clk60MHz,
     .rst,
     .in_player1_ready,
     .out_player1_ready,
@@ -65,7 +71,7 @@ choose_player u_choose_player(
 );
 
 turn_manager u_turn_manager(
-    .clk40MHz,
+    .clk60MHz,
     .rst,
     .throw_flag,
     .in_throw_flag,
@@ -73,7 +79,7 @@ turn_manager u_turn_manager(
 );
 
 set_wind u_set_wind(
-    .clk40MHz,
+    .clk60MHz,
     .rst,
     .turn,
     .wind
@@ -89,8 +95,8 @@ MouseCtl u_MouseCtl (
     .left
     );
 
-bufor100_40 u_bufor100_40(
-    .clk(clk40MHz),
+bufor100_60 u_bufor100_60(
+    .clk(clk60MHz),
     .xpos_nxt(xpos_prebuff),
     .ypos_nxt(ypos_prebuff),
     .xpos(xpos),
@@ -98,7 +104,7 @@ bufor100_40 u_bufor100_40(
 );
 
 throw u_throw(
-    .clk40MHz,
+    .clk60MHz,
     .rst,
     .left,
     .power,
@@ -107,4 +113,18 @@ throw u_throw(
     .turn(turn[0]),
     .current_player
 );
+
+vga_timing u_vga_timing(
+    .clk60MHz,
+    .rst,
+    .out(vga_if_timing)
+);
+
+draw_background u_draw_background(
+    .clk60MHz,
+    .rst,
+    .in(vga_if_timing),
+    .out(vga_if_background)
+);
+
 endmodule
