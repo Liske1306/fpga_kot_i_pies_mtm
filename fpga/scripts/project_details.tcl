@@ -42,8 +42,20 @@ set sv_files {
     ../rtl/set_speed.sv
     ../rtl/set_ypos.sv
     ../rtl/turn_manager.sv
+    ../rtl/draw_background.sv
     ../rtl/vga_if.sv
     ../rtl/vga_timing.sv
+    ../rtl/cat_rom.sv
+    ../rtl/crate_rom.sv
+    ../rtl/dog_rom.sv
+    ../rtl/draw_cat.sv
+    ../rtl/draw_crate.sv
+    ../rtl/draw_dog.sv
+    ../rtl/draw_doghouse.sv
+    ../rtl/draw_mouse.sv
+    ../rtl/draw_particle.sv
+    ../rtl/particle1_rom.sv
+    ../rtl/particle2_rom.sv
     rtl/top_fpga.sv
 }
 
@@ -57,9 +69,13 @@ set verilog_files {
 set vhdl_files {
     rtl/Ps2Interface.vhd
     ../rtl/MouseCtl.vhd
+    ../rtl/MouseDisplay.vhd
 }
 
 # Specify files for a memory initialization     -- EDIT
-# set mem_files {
-#    path/to/file.data
-# }
+ set mem_files {
+    ../rtl/image_rom.data
+    ../rtl/crate.dat
+    ../rtl/kot.dat
+    ../rtl/pies.dat
+ }

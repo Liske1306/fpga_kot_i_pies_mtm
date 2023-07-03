@@ -14,7 +14,7 @@
 
 `timescale 1 ns / 1 ps
 
-module top_fpga (
+module top_fpga(
     input  wire clk,
     input  wire btnC,
     input  wire [1:0] sw,
