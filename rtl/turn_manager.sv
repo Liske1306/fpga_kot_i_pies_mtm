@@ -17,8 +17,8 @@ logic throw_flag_pre, in_throw_flag_pre;
 always_ff @(posedge clk60MHz) begin
     if(rst) begin
         turn <= 3'b001;
-        throw_flag_pre <= OFF;
-        in_throw_flag_pre <= OFF;
+        throw_flag_pre <= '0;
+        in_throw_flag_pre <= '0;
     end
     else begin
         turn <= turn_nxt;
@@ -28,7 +28,7 @@ always_ff @(posedge clk60MHz) begin
 end
 
 always_comb begin
-    if(((throw_flag_pre == ON)&&(throw_flag == OFF)) || ((in_throw_flag_pre == ON)&&(in_throw_flag == OFF))) begin
+    if(((throw_flag_pre == '1)&&(throw_flag == '0)) || ((in_throw_flag_pre == '1)&&(in_throw_flag == '0))) begin
         turn_nxt = turn + 1;
     end
     else begin
