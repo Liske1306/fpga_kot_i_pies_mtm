@@ -26,8 +26,8 @@ module top(
     output logic out_player1_ready,
     input  logic in_player2_ready,
     output logic out_player2_ready,
-    input  logic [4:0] in_power,
-    output logic [4:0] out_power,
+    input  logic [3:0] in_power,
+    output logic [3:0] out_power,
     input  logic in_throw_flag,
     output logic out_throw_flag,
     output logic [3:0] r,
@@ -44,8 +44,10 @@ logic current_player;
 logic left;
 logic end_throw;
 logic [2:0] wind, turn;
-logic [4:0] power;
-logic [11:0] xpos, ypos, xpos_prebuff, ypos_prebuff;
+logic [3:0] power;
+logic [4:0] speed;
+logic [6:0] hp_player1, hp_player2;
+logic [11:0] xpos, ypos, xpos_particle, ypos_particle, ypos_prebuff;
 
 vga_if vga_if_timing();
 vga_if vga_if_background();
@@ -90,18 +92,10 @@ MouseCtl u_MouseCtl (
     .rst,
     .ps2_clk(ps2_clk),
     .ps2_data(ps2_data),
-    .xpos(xpos_prebuff),
-    .ypos(ypos_prebuff),
+    .xpos(xpos),
+    .ypos(ypos),
     .left
     );
-
-bufor100_60 u_bufor100_60(
-    .clk(clk60MHz),
-    .xpos_nxt(xpos_prebuff),
-    .ypos_nxt(ypos_prebuff),
-    .xpos(xpos),
-    .ypos(ypos)
-);
 
 throw u_throw(
     .clk60MHz,
@@ -120,11 +114,39 @@ vga_timing u_vga_timing(
     .out(vga_if_timing)
 );
 
-draw_background u_draw_background(
+set_speed u_set_speed(
     .clk60MHz,
     .rst,
-    .in(vga_if_timing),
-    .out(vga_if_background)
+    .turn(turn[0]),
+    .current_player,
+    .in_power,
+    .power,
+    .speed,
+    .wind
+);
+
+set_ypos u_set_ypos(
+    .clk60MHz,
+    .rst,
+    .in_throw_flag,
+    .throw_flag,
+    .ypos_prebuff,
+    .end_throw
+);
+
+simulate u_simulate(
+    .clk60MHz,
+    .rst,
+    .in_throw_flag,
+    .throw_flag,
+    .speed,
+    .turn(turn[0]),
+    .end_throw,
+    .ypos_prebuff,
+    .xpos_particle,
+    .ypos_particle,
+    .hp_player1,
+    .hp_player2
 );
 
 endmodule

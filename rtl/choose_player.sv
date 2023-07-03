@@ -26,10 +26,10 @@ enum logic {
 
 always_ff @(posedge clk60MHz) begin
     if(rst) begin
-        player1_led       <= OFF;
-        player2_led       <= OFF;
-        out_player1_ready <= OFF;
-        out_player2_ready <= OFF;
+        player1_led       <= '0;
+        player2_led       <= '0;
+        out_player1_ready <= '0;
+        out_player2_ready <= '0;
         current_player    <= 'z;
         state             <= CHOOSE_PLAYER;
     end
@@ -46,7 +46,7 @@ end
 always_comb begin
     case(state)
     CHOOSE_PLAYER: begin
-        if(((in_player1_ready == ON) && (out_player2_ready == ON)) || ((in_player2_ready == ON) && (out_player1_ready == ON)))begin
+        if(((in_player1_ready == '1) && (out_player2_ready == '1)) || ((in_player2_ready == '1) && (out_player1_ready == '1)))begin
             player1_led_nxt = player1_led;
             player2_led_nxt = player2_led;
             out_player1_ready_nxt = out_player1_ready;
@@ -54,27 +54,27 @@ always_comb begin
             current_player_nxt = current_player;
             state_nxt = IDLE;
         end
-        else if((in_player1_ready == OFF) && (player1_choose == 1)) begin
+        else if((in_player1_ready == '0) && (player1_choose == 1)) begin
             player1_led_nxt = 1;
             player2_led_nxt = 0;
-            out_player1_ready_nxt = ON;
-            out_player2_ready_nxt = OFF;
+            out_player1_ready_nxt = '1;
+            out_player2_ready_nxt = '0;
             current_player_nxt = PLAYER_1;
             state_nxt = CHOOSE_PLAYER;
         end
-        else if((in_player2_ready == OFF) && (player2_choose == 1)) begin
+        else if((in_player2_ready == '0) && (player2_choose == 1)) begin
             player1_led_nxt = 0;
             player2_led_nxt = 1;
-            out_player2_ready_nxt = ON;
-            out_player1_ready_nxt = OFF;
+            out_player2_ready_nxt = '1;
+            out_player1_ready_nxt = '0;
             current_player_nxt = PLAYER_2;
             state_nxt = CHOOSE_PLAYER;
         end
         else begin
             player1_led_nxt = 0;
             player2_led_nxt = 0;
-            out_player2_ready_nxt = OFF;
-            out_player1_ready_nxt = OFF;
+            out_player2_ready_nxt = '0;
+            out_player1_ready_nxt = '0;
             current_player_nxt = current_player;
             state_nxt = CHOOSE_PLAYER;
         end

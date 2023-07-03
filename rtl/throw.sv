@@ -8,7 +8,7 @@ module throw(
     input  logic current_player,
     input  logic end_throw,
 
-    output logic [4:0] power,
+    output logic [3:0] power,
     output logic throw_flag
 );
 
@@ -16,7 +16,7 @@ import variable_pkg::*;
 
 logic [4:0] power_nxt;
 logic throw_flag_nxt;
-logic [20:0]counter_nxt, counter;
+logic [22:0]counter_nxt, counter;
 
 enum logic [1:0]{
     WAIT = 2'b00,
@@ -28,7 +28,7 @@ always_ff @(posedge clk60MHz) begin
     if(rst) begin
         power      <= '0;
         state      <= WAIT;
-        throw_flag <= OFF;
+        throw_flag <= '0;
         counter    <= '0;
     end
     else begin
@@ -49,14 +49,14 @@ always_comb begin
                 state_nxt = WAIT;
             end
             power_nxt = '0;
-            throw_flag_nxt = OFF;
+            throw_flag_nxt = '0;
             counter_nxt = '0;
         end
         UPDATE: begin
             if((left == 0)) begin
                 state_nxt = HOLD;
                 power_nxt = power;
-                throw_flag_nxt = ON;
+                throw_flag_nxt = '1;
                 counter_nxt = '0;
             end
             else begin
@@ -69,25 +69,25 @@ always_comb begin
                     power_nxt = power;
                     counter_nxt = counter + 1;
                 end
-                throw_flag_nxt = OFF;
+                throw_flag_nxt = '0;
             end
         end
         HOLD: begin
             if(end_throw == 1) begin
                 state_nxt = WAIT;
-                throw_flag_nxt = OFF;
+                throw_flag_nxt = '0;
                 power_nxt = '0;
             end
             else begin
                 state_nxt = HOLD;
-                throw_flag_nxt = ON;
+                throw_flag_nxt = '1;
                 power_nxt = power;
             end
             counter_nxt = '0;
         end
         default: begin
             state_nxt = WAIT;
-            throw_flag_nxt = OFF;
+            throw_flag_nxt = '0;
             power_nxt = '0;
             counter_nxt = '0;
         end

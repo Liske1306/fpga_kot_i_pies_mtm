@@ -38,9 +38,10 @@ set sv_files {
     ../rtl/choose_player.sv
     ../rtl/set_wind.sv
     ../rtl/throw.sv
+    ../rtl/simulate.sv
+    ../rtl/set_speed.sv
+    ../rtl/set_ypos.sv
     ../rtl/turn_manager.sv
-    ../rtl/bufor100_60.sv
-    ../rtl/draw_background.sv
     ../rtl/vga_if.sv
     ../rtl/vga_timing.sv
     rtl/top_fpga.sv
