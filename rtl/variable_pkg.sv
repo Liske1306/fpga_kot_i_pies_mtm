@@ -12,16 +12,24 @@ localparam VER_BLANK_END = 806;
 localparam VER_SYNC_START = 771;
 localparam VER_SYNC_END = 777;
 
-//Prameters for draw_rect
-//localparam HOR_RECT_POSITION= 100;
-//localparam VER_RECT_POSITION= 100;
-localparam RECT_WIDTH= 48;
-localparam RECT_HEIGHT= 64;
-localparam RECT_COLOR= 12'ha_b_e;
-localparam RECT_FONT_SIGNS_X= 16;
-localparam RECT_FONT_SIGNS_Y= 16;
-localparam RECT_FONT_XPOS= 203;
-localparam RECT_FONT_YPOS= 22;
+//Prameters for draw_*
+localparam HOR_CAT_POSITION = 112;
+localparam VER_CAT_POSITION = 455;
+
+localparam HOR_CRATE_POSITION = 112;
+localparam VER_CRATE_POSITION = 599;
+
+localparam HOR_DOG_POSITION = 762;
+localparam VER_DOG_POSITION = 455;
+
+localparam HOR_DOGHOUSE_POSITION = 762;
+localparam VER_DOGHOUSE_POSITION = 599;
+
+localparam PLAYER_WIDTH = 128;
+localparam PLAYER_HEIGHT = 144;
+
+localparam PARTICLE_WIDTH = 50;
+localparam PARTICLE_HEIGHT = 50;
 
 //Players
 localparam PLAYER_1 = 1;

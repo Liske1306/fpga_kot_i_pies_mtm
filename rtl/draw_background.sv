@@ -12,7 +12,7 @@ import variable_pkg::*;
 
 logic [11:0] rgb_nxt;
 
-always_ff @(posedge clk60MHz) begin : bg_ff_blk
+always_ff @(posedge clk60MHz) begin
     if (rst) begin
         out.vcount <= '0;
         out.vsync  <= '0;
@@ -23,8 +23,8 @@ always_ff @(posedge clk60MHz) begin : bg_ff_blk
         out.rgb    <= '0;
     end else begin
         out.vcount <= in.vcount;
-        out.vsync  <= in.vsync;
-        out.vblnk  <= in.vblnk;
+        out.vsync <= in.vsync;
+        out.vblnk <= in.vblnk;
         out.hcount <= in.hcount;
         out.hsync  <= in.hsync;
         out.hblnk  <= in.hblnk;
@@ -32,40 +32,17 @@ always_ff @(posedge clk60MHz) begin : bg_ff_blk
     end
 end
 
-always_comb begin : bg_comb_blk
+always_comb begin
     if (in.vblnk || in.hblnk) begin             // Blanking region:
         rgb_nxt = 12'h0_0_0;                    // - make it it black.
-    end else begin                              // Active region:
-        if (in.vcount == 0)                     // - top edge:
-            rgb_nxt = 12'hf_f_0;                // - - make a yellow line.
-        else if (in.vcount == VER_PIXELS - 1)   // - bottom edge:
-            rgb_nxt = 12'hf_0_0;                // - - make a red line.
-        else if (in.hcount == 0)                // - left edge:
-            rgb_nxt = 12'h0_f_0;                // - - make a green line.
-        else if (in.hcount == HOR_PIXELS - 1)   // - right edge:
-            rgb_nxt = 12'h0_0_f;                // - - make a blue line.
-
-        // Add your code here.
-
-        else if ((in.hcount == 200)&&(in.vcount >= 100)&&(in.vcount <= 500)) 
-            rgb_nxt = 12'h0_0_3;
-        else if ((in.hcount >= 200)&&(in.hcount <= 400)&&(in.vcount >= 100)&&(in.vcount <= 300)&&(in.hcount == (500 - in.vcount)))
-            rgb_nxt = 12'h0_0_3;
-        else if ((in.hcount >= 200)&&(in.hcount <= 400)&&(in.vcount >= 300)&&(in.vcount <= 500)&&(in.hcount == (in.vcount - 100))) 
-            rgb_nxt = 12'h0_0_3;
-        else if ((in.hcount == 500)&&(in.vcount >= 100)&&(in.vcount <= 300))
-            rgb_nxt = 12'h0_0_3;
-        else if ((in.hcount == 700)&&(in.vcount >= 300)&&(in.vcount <= 500))
-            rgb_nxt = 12'h0_0_3;
-        else if ((in.vcount == 100)&&(in.hcount >= 500)&&(in.hcount <= 700))
-            rgb_nxt = 12'h0_0_3;
-        else if ((in.vcount == 300)&&(in.hcount >= 500)&&(in.hcount <= 700))
-            rgb_nxt = 12'h0_0_3;
-        else if ((in.vcount == 500)&&(in.hcount >= 500)&&(in.hcount <= 700))
-            rgb_nxt = 12'h0_0_3;
-
+    end 
+    else begin                              // Active region:
+        if ((in.vcount >= 384)&&(in.vcount <= 743)&&(in.hcount >= 497)&&(in.hcount <= 527)) 
+            rgb_nxt = 12'h9_7_7;                // fence
+        else if (in.vcount <= 668)              
+            rgb_nxt = 12'ha_d_f;                // blue
         else                                    // The rest of active display pixels:
-            rgb_nxt = 12'h8_8_8;                // - fill with gray.
+            rgb_nxt = 12'h5_c_5;                // grass
     end
 end
 

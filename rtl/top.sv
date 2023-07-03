@@ -45,14 +45,23 @@ logic left;
 logic end_throw;
 logic [2:0] wind, turn;
 logic [4:0] power;
-logic [11:0] xpos, ypos, xpos_prebuff, ypos_prebuff;
+logic [11:0] xpos, ypos, xpos_particle, ypos_particle;
+logic [11:0] address_cat, address_dog, address_particle, address_crate, address_doghouse;
+logic [11:0] rgb;
+logic [11:0] rgb_cat, rgb_crate, rgb_dog, rgb_doghouse, rgb_particle1, rgb_particle2;
 
 vga_if vga_if_timing();
 vga_if vga_if_background();
+vga_if vga_if_cat();
+vga_if vga_if_crate();
+vga_if vga_if_dog();
+vga_if vga_if_doghouse();
+vga_if vga_if_particle();
+vga_if vga_if_mouse();
 
-assign vs = vga_if_background.vsync;
-assign hs = vga_if_background.hsync;
-assign {r,g,b} = vga_if_background.rgb;
+assign vs = vga_if_mouse.vsync;
+assign hs = vga_if_mouse.hsync;
+assign {r,g,b} = vga_if_mouse.rgb;
 assign out_throw_flag = throw_flag;
 assign out_power = power;
 
@@ -86,21 +95,13 @@ set_wind u_set_wind(
 );
 
 MouseCtl u_MouseCtl (
-    .clk(clk100MHz),
+    .clk(clk60MHz),
     .rst,
     .ps2_clk(ps2_clk),
     .ps2_data(ps2_data),
-    .xpos(xpos_prebuff),
-    .ypos(ypos_prebuff),
-    .left
-    );
-
-bufor100_60 u_bufor100_60(
-    .clk(clk60MHz),
-    .xpos_nxt(xpos_prebuff),
-    .ypos_nxt(ypos_prebuff),
-    .xpos(xpos),
-    .ypos(ypos)
+    .xpos,
+    .ypos,
+    .left(left_nxt)
 );
 
 throw u_throw(
@@ -125,6 +126,96 @@ draw_background u_draw_background(
     .rst,
     .in(vga_if_timing),
     .out(vga_if_background)
+);
+
+cat_rom u_cat_rom(
+    .clk60MHz,
+    .address(address_cat),
+    .rgb(rgb_cat)
+);
+
+draw_cat u_draw_cat(
+    .clk60MHz,
+    .rst,
+    .rgb_pixel(rgb_cat),
+    .pixel_addr(address_cat),
+    .in(vga_if_background),
+    .out(vga_if_cat)
+);
+
+crate_rom u_crate_rom(
+    .clk60MHz,
+    .address(address_crate),
+    .address1(address_doghouse),
+    .rgb(rgb_crate),
+    .rgb1(rgb_doghouse)
+);
+
+draw_crate u_draw_crate(
+    .clk60MHz,
+    .rst,
+    .rgb_pixel(rgb_crate),
+    .pixel_addr(address_crate),
+    .in(vga_if_cat),
+    .out(vga_if_crate)
+);
+
+dog_rom u_dog_rom(
+    .clk60MHz,
+    .address(address_dog),
+    .rgb(rgb_dog)
+);
+
+draw_dog u_draw_dog(
+    .clk60MHz,
+    .rst,
+    .rgb_pixel(rgb_dog),
+    .pixel_addr(address_dog),
+    .in(vga_if_crate),
+    .out(vga_if_dog)
+);
+
+draw_doghouse u_draw_doghouse(
+    .clk60MHz,
+    .rst,
+    .rgb_pixel(rgb_doghouse),
+    .pixel_addr(address_doghouse),
+    .in(vga_if_dog),
+    .out(vga_if_doghouse)
+);
+
+particle1_rom u_particle1_rom(
+    .clk60MHz,
+    .address(address_particle),
+    .rgb(rgb_particle1)
+);
+
+particle2_rom u_particle2_rom(
+    .clk60MHz,
+    .address(address_particle),
+    .rgb(rgb_particle2)
+);
+
+draw_particle u_draw_particle(
+    .clk60MHz,
+    .rst,
+    .turn(turn[0]),
+    .xpos_particle,
+    .ypos_particle,
+    .rgb_pixel1(rgb_particle1),
+    .rgb_pixel2(rgb_particle2),
+    .pixel_addr(address_particle),
+    .in (vga_if_doghouse),
+    .out (vga_if_particle)
+);
+
+draw_mouse u_draw_mouse(
+    .clk60MHz,
+    .rst,
+    .xpos,
+    .ypos,
+    .in (vga_if_particle),
+    .out (vga_if_mouse)
 );
 
 endmodule
