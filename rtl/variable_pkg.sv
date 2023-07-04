@@ -13,23 +13,47 @@ localparam VER_SYNC_START = 771;
 localparam VER_SYNC_END = 777;
 
 //Prameters for draw_*
-localparam HOR_CAT_POSITION = 112;
-localparam VER_CAT_POSITION = 455;
+localparam HOR_CAT_POSITION = 113;
+localparam VER_CAT_POSITION = 471;
+localparam HOR_CAT_POSITION1 = 176;
+localparam VER_CAT_POSITION1 = 471;
+localparam HOR_CAT_POSITION2 = 113;
+localparam VER_CAT_POSITION2 = 535;
+localparam HOR_CAT_POSITION3 = 176;
+localparam VER_CAT_POSITION3 = 535;
 
 localparam HOR_CRATE_POSITION = 112;
 localparam VER_CRATE_POSITION = 599;
 
-localparam HOR_DOG_POSITION = 762;
-localparam VER_DOG_POSITION = 455;
+localparam HOR_DOG_POSITION = 763;
+localparam VER_DOG_POSITION = 472;
+localparam HOR_DOG_POSITION1 = 826;
+localparam VER_DOG_POSITION1 = 472;
+localparam HOR_DOG_POSITION2 = 762;
+localparam VER_DOG_POSITION2 = 535;
+localparam HOR_DOG_POSITION3 = 826;
+localparam VER_DOG_POSITION3 = 535;
 
 localparam HOR_DOGHOUSE_POSITION = 762;
 localparam VER_DOGHOUSE_POSITION = 599;
 
 localparam PLAYER_WIDTH = 128;
 localparam PLAYER_HEIGHT = 144;
+localparam PLAYER_WIDTH1 = 64;
+localparam PLAYER_HEIGHT1 = 64;
 
 localparam PARTICLE_WIDTH = 50;
 localparam PARTICLE_HEIGHT = 50;
+
+localparam HP_PLAYER1_XPOS = 400;
+localparam HP_YPOS = 100;
+localparam HP_PLAYER2_XPOS = 624;
+localparam HP_HEIGHT = 20;
+
+localparam POWER_PLAYER1_XPOS = 240;
+localparam POWER_YPOS = 320;
+localparam POWER_PLAYER2_XPOS = 763;
+localparam POWER_HEIGHT = 20;
 
 //Players
 localparam PLAYER_1 = 1;

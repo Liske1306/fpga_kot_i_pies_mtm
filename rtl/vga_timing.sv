@@ -23,6 +23,7 @@ logic hsync_nxt;
       out.vsync  <= 1'b0;
       out.hsync  <= 1'b0;
       out.vblnk  <= 1'b0;
+      out.rgb    <= '0;
     end
     else begin
       out.hcount <= hcount_nxt;
@@ -31,6 +32,7 @@ logic hsync_nxt;
       out.vsync  <= vsync_nxt;
       out.hsync  <= hsync_nxt;
       out.vblnk  <= vblnk_nxt;
+      out.rgb    <= '0;
     end
   end
 

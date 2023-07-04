@@ -48,8 +48,12 @@ logic [3:0] power;
 logic [4:0] speed;
 logic [6:0] hp_player1, hp_player2;
 logic [11:0] xpos, ypos, xpos_particle, ypos_particle, ypos_prebuff;
-logic [11:0] address_cat, address_dog, address_particle, address_crate, address_doghouse;
-logic [11:0] rgb_cat, rgb_crate, rgb_dog, rgb_doghouse, rgb_particle1, rgb_particle2;
+logic [11:0] address_particle, address_crate, address_doghouse;
+logic [11:0] address_cat, address_cat1, address_cat2, address_cat3;
+logic [11:0] address_dog, address_dog1, address_dog2, address_dog3;
+logic [11:0] rgb_crate, rgb_doghouse, rgb_particle1, rgb_particle2;
+logic [11:0] rgb_cat, rgb_cat1, rgb_cat2, rgb_cat3;
+logic [11:0] rgb_dog, rgb_dog1, rgb_dog2, rgb_dog3;
 
 vga_if vga_if_timing();
 vga_if vga_if_background();
@@ -58,6 +62,8 @@ vga_if vga_if_crate();
 vga_if vga_if_dog();
 vga_if vga_if_doghouse();
 vga_if vga_if_particle();
+vga_if vga_if_hp();
+vga_if vga_if_power();
 vga_if vga_if_mouse();
 
 assign vs = vga_if_mouse.vsync;
@@ -102,7 +108,17 @@ MouseCtl u_MouseCtl (
     .ps2_data(ps2_data),
     .xpos(xpos),
     .ypos(ypos),
-    .left
+    .left,
+
+    .zpos(),
+    .middle(),
+    .right(),
+    .new_event(),
+    .value('0),
+    .setx('0),
+    .sety('0),
+    .setmax_x('0),
+    .setmax_y('0)
     );
 
 throw u_throw(
@@ -167,14 +183,26 @@ draw_background u_draw_background(
 cat_rom u_cat_rom(
     .clk60MHz,
     .address(address_cat),
-    .rgb(rgb_cat)
+    .address1(address_cat1),
+    .address2(address_cat2),
+    .address3(address_cat3),
+    .rgb(rgb_cat),
+    .rgb1(rgb_cat1),
+    .rgb2(rgb_cat2),
+    .rgb3(rgb_cat3)
 );
 
 draw_cat u_draw_cat(
     .clk60MHz,
     .rst,
     .rgb_pixel(rgb_cat),
+    .rgb_pixel1(rgb_cat1),
+    .rgb_pixel2(rgb_cat2),
+    .rgb_pixel3(rgb_cat3),
     .pixel_addr(address_cat),
+    .pixel_addr1(address_cat1),
+    .pixel_addr2(address_cat2),
+    .pixel_addr3(address_cat3),
     .in(vga_if_background),
     .out(vga_if_cat)
 );
@@ -199,14 +227,26 @@ draw_crate u_draw_crate(
 dog_rom u_dog_rom(
     .clk60MHz,
     .address(address_dog),
-    .rgb(rgb_dog)
+    .address1(address_dog1),
+    .address2(address_dog2),
+    .address3(address_dog3),
+    .rgb(rgb_dog),
+    .rgb1(rgb_dog1),
+    .rgb2(rgb_dog2),
+    .rgb3(rgb_dog3)
 );
 
 draw_dog u_draw_dog(
     .clk60MHz,
     .rst,
     .rgb_pixel(rgb_dog),
+    .rgb_pixel1(rgb_dog1),
+    .rgb_pixel2(rgb_dog2),
+    .rgb_pixel3(rgb_dog3),
     .pixel_addr(address_dog),
+    .pixel_addr1(address_dog1),
+    .pixel_addr2(address_dog2),
+    .pixel_addr3(address_dog3),
     .in(vga_if_crate),
     .out(vga_if_dog)
 );
@@ -245,12 +285,30 @@ draw_particle u_draw_particle(
     .out (vga_if_particle)
 );
 
+draw_hp u_draw_hp(
+    .clk60MHz,
+    .rst,
+    .hp_player1,
+    .hp_player2,
+    .in (vga_if_particle),
+    .out (vga_if_hp)
+);
+
+draw_power u_draw_power(
+    .clk60MHz,
+    .rst,
+    .power,
+    .current_player,
+    .in (vga_if_hp),
+    .out (vga_if_power)
+);
+
 draw_mouse u_draw_mouse(
     .clk60MHz,
     .rst,
     .xpos,
     .ypos,
-    .in (vga_if_particle),
+    .in (vga_if_power),
     .out (vga_if_mouse)
 );
 
