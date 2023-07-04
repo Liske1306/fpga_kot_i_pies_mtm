@@ -16,7 +16,6 @@
 
 module top(
     input  logic clk60MHz,
-    input  logic clk100MHz,
     input  logic rst,
     input  logic player1_choose,
     input  logic player2_choose,
@@ -49,7 +48,6 @@ logic [4:0] speed;
 logic [6:0] hp_player1, hp_player2;
 logic [11:0] xpos, ypos, xpos_particle, ypos_particle, ypos_prebuff;
 logic [11:0] address_cat, address_dog, address_particle, address_crate, address_doghouse;
-logic [11:0] rgb;
 logic [11:0] rgb_cat, rgb_crate, rgb_dog, rgb_doghouse, rgb_particle1, rgb_particle2;
 
 vga_if vga_if_timing();
@@ -156,6 +154,13 @@ simulate u_simulate(
     .ypos_particle,
     .hp_player1,
     .hp_player2
+);
+
+draw_background u_draw_background(
+    .clk60MHz,
+    .rst,
+    .in(vga_if_timing),
+    .out(vga_if_background)
 );
 
 cat_rom u_cat_rom(

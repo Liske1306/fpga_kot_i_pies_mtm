@@ -43,7 +43,6 @@ clk_wiz_0 my_clk_wiz_0(
 
 top u_top (
     .clk60MHz(clk60MHz),
-    .clk100MHz(clk100MHz),
     .rst(btnC),
     .player1_choose(sw[1]),
     .player2_choose(sw[0]),
