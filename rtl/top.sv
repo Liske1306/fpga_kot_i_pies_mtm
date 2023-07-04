@@ -19,6 +19,7 @@ module top(
     input  logic rst,
     input  logic player1_choose,
     input  logic player2_choose,
+    output  logic [3:0] ledy,
     output logic player1_led,
     output logic player2_led,
     input  logic in_player1_ready,
@@ -251,6 +252,16 @@ draw_mouse u_draw_mouse(
     .ypos,
     .in (vga_if_particle),
     .out (vga_if_mouse)
+);
+
+show_led u_show_led(
+    .clk60MHz,
+    .rst,
+    .current_player,
+    .turn(turn[0]),
+    .left,
+    .throw_flag,
+    .led(ledy[3:0])
 );
 
 endmodule

@@ -16,7 +16,7 @@ module simulate(
 logic [6:0] hp_player1_nxt, hp_player2_nxt;
 logic [11:0] xpos_particle_nxt;
 logic end_throw_nxt;
-logic [16:0] counter, counter_nxt;
+logic [18:0] counter, counter_nxt;
 
 import variable_pkg::*;
 
@@ -69,13 +69,13 @@ always_comb begin
             counter_nxt = '0;
         end
         THROW: begin
-            if((ypos_particle >= 455) || (xpos_particle >= 497) && (xpos_particle <= 527) && (ypos_particle >= 384)) begin
+            if((ypos_particle >= 455) &&  (ypos_particle <= 760)|| (xpos_particle >= 497) && (xpos_particle <= 527) && (ypos_particle >= 384)) begin
                 state_nxt = HIT;
             end
             else begin
                 state_nxt = THROW;
             end
-            if(counter >= 100000)begin
+            if(counter >= (500000))begin
                     if(turn == PLAYER_1)begin
                         xpos_particle_nxt = xpos_particle + speed;
                     end

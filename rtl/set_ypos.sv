@@ -9,7 +9,7 @@ module set_ypos(
 
 logic [11:0] ypos_prebuff_nxt;
 logic [5:0] speed, speed_nxt;
-logic [16:0] counter, counter_nxt;
+logic [17:0] counter, counter_nxt;
 
 enum logic [2:0]{
     WAIT = 2'b00,
@@ -37,16 +37,17 @@ always_comb begin
         WAIT: begin
             if((in_throw_flag == 1) || (throw_flag == 1))begin
                 state_nxt = UP;
+                ypos_prebuff_nxt = 454;
             end
             else begin
                 state_nxt = WAIT;
+                ypos_prebuff_nxt = 768;
             end
             speed_nxt = 20;
             counter_nxt = '0;
-            ypos_prebuff_nxt = 768;
         end
         UP: begin
-            if(counter >= 100000)begin
+            if(counter >= 250000)begin
                 ypos_prebuff_nxt = ypos_prebuff - speed;
                 speed_nxt = speed - 1;
                 counter_nxt = '0;

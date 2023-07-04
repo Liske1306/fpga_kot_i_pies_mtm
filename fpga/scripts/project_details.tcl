@@ -53,6 +53,7 @@ set sv_files {
     ../rtl/draw_dog.sv
     ../rtl/draw_doghouse.sv
     ../rtl/draw_mouse.sv
+    ../rtl/show_led.sv
     ../rtl/draw_particle.sv
     ../rtl/particle1_rom.sv
     ../rtl/particle2_rom.sv

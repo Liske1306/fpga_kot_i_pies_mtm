@@ -9,31 +9,46 @@ module turn_manager(
     output logic [2:0] turn
 );
 
-import variable_pkg::*;
-
 logic [2:0] turn_nxt;
-logic throw_flag_pre, in_throw_flag_pre;
+
+enum logic {
+    WAIT = 1'b0,
+    UPDATE = 1'b1
+} state, state_nxt;
 
 always_ff @(posedge clk60MHz) begin
     if(rst) begin
         turn <= 3'b001;
-        throw_flag_pre <= '0;
-        in_throw_flag_pre <= '0;
+        state <= WAIT;
     end
     else begin
         turn <= turn_nxt;
-        throw_flag_pre <= throw_flag;
-        in_throw_flag_pre <= in_throw_flag;
+        state <= state_nxt;
     end
 end
 
 always_comb begin
-    if(((throw_flag_pre == '1)&&(throw_flag == '0)) || ((in_throw_flag_pre == '1)&&(in_throw_flag == '0))) begin
-        turn_nxt = turn + 1;
-    end
-    else begin
+    case(state)
+    WAIT: begin
+        if((throw_flag == 1) || (in_throw_flag == 1)) begin
+            state_nxt = UPDATE;
+        end
+        else begin
+            state_nxt = WAIT;
+        end 
         turn_nxt = turn;
     end
+    UPDATE: begin
+        if((throw_flag == 0) && (in_throw_flag == 0)) begin
+        turn_nxt = turn + 1;
+        state_nxt = WAIT;
+        end
+        else begin
+            turn_nxt = turn;
+            state_nxt = UPDATE;            
+        end
+    end
+    endcase
 end
 
 
