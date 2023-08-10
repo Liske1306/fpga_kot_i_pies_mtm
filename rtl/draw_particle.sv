@@ -3,12 +3,10 @@
 module draw_particle(
     input  logic clk60MHz,
     input  logic rst,
-    input  logic turn,
      
     input  logic [11:0] xpos_particle,
     input  logic [11:0] ypos_particle,
-    input  logic [11:0] rgb_pixel1,
-    input  logic [11:0] rgb_pixel2,
+    input  logic [11:0] rgb_pixel,
     output logic [11:0] pixel_addr,
  
     vga_if.in in,
@@ -69,12 +67,7 @@ end
 always_comb begin
     if(!vblnk_temp && !hblnk_temp) begin
         if((hcount_temp >= xpos_particle)&&(hcount_temp < xpos_particle + PARTICLE_WIDTH)&&(vcount_temp >= ypos_particle)&&(vcount_temp < ypos_particle + PARTICLE_HEIGHT)) begin
-            if(turn == PLAYER_1) begin
-                rgb_nxt = rgb_pixel1;
-            end
-            else begin
-                rgb_nxt = rgb_pixel2;
-            end
+            rgb_nxt = rgb_pixel;
         end
         else begin
             rgb_nxt = rgb_temp;  
