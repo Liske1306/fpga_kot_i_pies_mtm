@@ -56,8 +56,7 @@ set sv_files {
     ../rtl/draw_particle.sv
     ../rtl/draw_hp.sv
     ../rtl/draw_power.sv
-    ../rtl/particle1_rom.sv
-    ../rtl/particle2_rom.sv
+    ../rtl/particle_rom.sv
     rtl/top_fpga.sv
 }
 
@@ -85,6 +84,5 @@ set vhdl_files {
     ../rtl/dog1.dat
     ../rtl/dog2.dat
     ../rtl/dog3.dat
-    ../rtl/kot.dat
-    ../rtl/pies.dat
+    ../rtl/particle.dat
  }

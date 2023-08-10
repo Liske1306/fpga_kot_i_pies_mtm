@@ -50,7 +50,7 @@ logic [11:0] xpos, ypos, xpos_particle, ypos_particle, ypos_prebuff;
 logic [11:0] address_particle, address_crate, address_doghouse;
 logic [11:0] address_cat, address_cat1, address_cat2, address_cat3;
 logic [11:0] address_dog, address_dog1, address_dog2, address_dog3;
-logic [11:0] rgb_crate, rgb_doghouse, rgb_particle1, rgb_particle2;
+logic [11:0] rgb_crate, rgb_doghouse, rgb_particle;
 logic [11:0] rgb_cat, rgb_cat1, rgb_cat2, rgb_cat3;
 logic [11:0] rgb_dog, rgb_dog1, rgb_dog2, rgb_dog3;
 
@@ -259,26 +259,18 @@ draw_doghouse u_draw_doghouse(
     .out(vga_if_doghouse)
 );
 
-particle1_rom u_particle1_rom(
+particle_rom u_particle_rom(
     .clk60MHz,
     .address(address_particle),
-    .rgb(rgb_particle1)
-);
-
-particle2_rom u_particle2_rom(
-    .clk60MHz,
-    .address(address_particle),
-    .rgb(rgb_particle2)
+    .rgb(rgb_particle)
 );
 
 draw_particle u_draw_particle(
     .clk60MHz,
     .rst,
-    .turn(turn[0]),
     .xpos_particle,
     .ypos_particle,
-    .rgb_pixel1(rgb_particle1),
-    .rgb_pixel2(rgb_particle2),
+    .rgb_pixel(rgb_particle),
     .pixel_addr(address_particle),
     .in (vga_if_doghouse),
     .out (vga_if_particle)
