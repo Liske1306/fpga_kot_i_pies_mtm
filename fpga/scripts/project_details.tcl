@@ -55,8 +55,9 @@ set sv_files {
     ../rtl/draw_mouse.sv
     ../rtl/show_led.sv
     ../rtl/draw_particle.sv
-    ../rtl/particle1_rom.sv
-    ../rtl/particle2_rom.sv
+    ../rtl/draw_hp.sv
+    ../rtl/draw_power.sv
+    ../rtl/particle_rom.sv
     rtl/top_fpga.sv
 }
 
@@ -75,8 +76,14 @@ set vhdl_files {
 
 # Specify files for a memory initialization     -- EDIT
  set mem_files {
-    ../rtl/image_rom.data
     ../rtl/crate.dat
-    ../rtl/kot.dat
-    ../rtl/pies.dat
+    ../rtl/cat.dat
+    ../rtl/cat1.dat
+    ../rtl/cat2.dat
+    ../rtl/cat3.dat
+    ../rtl/dog.dat
+    ../rtl/dog1.dat
+    ../rtl/dog2.dat
+    ../rtl/dog3.dat
+    ../rtl/particle.dat
  }

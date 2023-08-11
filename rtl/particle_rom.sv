@@ -1,4 +1,4 @@
-module particle1_rom(
+module particle_rom(
     input  logic clk60MHz,
     input  logic [11:0] address,  // address = {addry[5:0], addrx[5:0]}
     output logic [11:0] rgb
@@ -17,7 +17,7 @@ reg [11:0] rom [0:4095];
  */
 
 /* Relative path from the simulation or synthesis working directory */
-initial $readmemh("../rtl/kot.dat", rom);
+initial $readmemh("../rtl/particle.dat", rom);
 
 
 /**
