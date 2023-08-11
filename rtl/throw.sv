@@ -5,7 +5,7 @@ module throw(
     input  logic rst,
     input  logic left,
     input  logic turn,
-    input  logic current_player,
+    input  logic [1:0] current_player,
     input  logic end_throw,
 
     output logic [3:0] power,
@@ -14,7 +14,7 @@ module throw(
 
 import variable_pkg::*;
 
-logic [4:0] power_nxt;
+logic [3:0] power_nxt;
 logic throw_flag_nxt;
 logic [22:0]counter_nxt, counter;
 
@@ -42,7 +42,7 @@ end
 always_comb begin
     case(state)
         WAIT: begin
-            if((left == 1) && (turn==current_player)) begin
+            if((left == 1) && (((turn == 0) && (current_player == PLAYER_1)) || ((turn == 1) && (current_player == PLAYER_2)))) begin
                 state_nxt = UPDATE;
             end
             else begin
@@ -53,7 +53,7 @@ always_comb begin
             counter_nxt = '0;
         end
         UPDATE: begin
-            if((left == 0)) begin
+            if(left == 0) begin
                 state_nxt = HOLD;
                 power_nxt = power;
                 throw_flag_nxt = '1;

@@ -57,7 +57,7 @@ localparam POWER_HEIGHT = 20;
 
 //Players
 localparam PLAYER_1 = 1;
-localparam PLAYER_2 = 0;
+localparam PLAYER_2 = 2;
 localparam OFF = 1;
 localparam ON = 0;
 
