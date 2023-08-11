@@ -4,14 +4,17 @@ module set_ypos(
     input  logic in_throw_flag,
     input  logic throw_flag,
     input  logic end_throw,
+    input  logic [1:0] current_player,
     output logic [11:0] ypos_prebuff
 );
+
+import variable_pkg::*;
 
 logic [11:0] ypos_prebuff_nxt;
 logic [5:0] speed, speed_nxt;
 logic [17:0] counter, counter_nxt;
 
-enum logic [2:0]{
+enum logic [1:0]{
     WAIT = 2'b00,
     UP = 2'b01,
     DOWN = 2'b10
@@ -35,7 +38,7 @@ end
 always_comb begin
     case(state)
         WAIT: begin
-            if((in_throw_flag == 1) || (throw_flag == 1))begin
+            if(((throw_flag == 1) || (in_throw_flag == 1)) && ((current_player == PLAYER_1) || (current_player == PLAYER_2)))begin
                 state_nxt = UP;
                 ypos_prebuff_nxt = 454;
             end

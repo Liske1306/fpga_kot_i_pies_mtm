@@ -40,7 +40,7 @@ module top(
 );
 
 logic throw_flag;
-logic current_player;
+logic [1:0]current_player;
 logic left;
 logic end_throw;
 logic [2:0] wind, turn;
@@ -85,6 +85,7 @@ turn_manager u_turn_manager(
     .rst,
     .throw_flag,
     .in_throw_flag,
+    .current_player,
     .turn
 );
 
@@ -137,6 +138,7 @@ set_ypos u_set_ypos(
     .clk60MHz,
     .rst,
     .in_throw_flag,
+    .current_player,
     .throw_flag,
     .ypos_prebuff,
     .end_throw
@@ -146,6 +148,7 @@ simulate u_simulate(
     .clk60MHz,
     .rst,
     .in_throw_flag,
+    .current_player,
     .throw_flag,
     .speed,
     .turn(turn[0]),
@@ -257,7 +260,6 @@ draw_mouse u_draw_mouse(
 show_led u_show_led(
     .clk60MHz,
     .rst,
-    .current_player,
     .turn(turn[0]),
     .left,
     .throw_flag,

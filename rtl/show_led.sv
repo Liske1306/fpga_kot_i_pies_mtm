@@ -1,7 +1,6 @@
 module show_led(
     input  logic clk60MHz,
     input  logic rst,
-    input  logic current_player,
     input  logic turn,
     input  logic throw_flag,
     input  logic left,
@@ -13,7 +12,7 @@ always_ff @(posedge clk60MHz) begin
         led[3:0] <= '0;
     end
     else begin
-        led[0] <= current_player;
+        led[0] <= '1;
         led[1] <= turn;
         led[2] <= throw_flag;
         led[3] <= left;

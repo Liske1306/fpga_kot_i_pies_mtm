@@ -69,7 +69,7 @@ end
 always_comb begin
     if(!vblnk_temp && !hblnk_temp) begin
         if((hcount_temp >= xpos_particle)&&(hcount_temp < xpos_particle + PARTICLE_WIDTH)&&(vcount_temp >= ypos_particle)&&(vcount_temp < ypos_particle + PARTICLE_HEIGHT)) begin
-            if(turn == PLAYER_1) begin
+            if(turn == 0) begin
                 rgb_nxt = rgb_pixel1;
             end
             else begin

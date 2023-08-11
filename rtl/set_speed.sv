@@ -5,7 +5,7 @@ module set_speed(
     input  logic [3:0] power,
     input  logic [2:0] wind,
     input  logic turn,
-    input  logic current_player,
+    input  logic [1:0] current_player,
     output logic [4:0] speed
 );
 
@@ -23,7 +23,7 @@ always_ff @(posedge clk60MHz) begin
 end
 
 always_comb begin
-    if(current_player == PLAYER_1 && turn == PLAYER_1) begin
+    if(current_player == PLAYER_1 && turn == 0) begin
         if(wind <= 3) begin
             speed_nxt = power - wind - 1;
         end
@@ -31,7 +31,7 @@ always_comb begin
             speed_nxt = power - 3 + wind;
         end
     end
-    else if(current_player == PLAYER_2 && turn == PLAYER_1) begin
+    else if(current_player == PLAYER_2 && turn == 0) begin
         if(wind <= 3) begin
             speed_nxt = in_power - wind - 1;
         end
@@ -39,7 +39,7 @@ always_comb begin
             speed_nxt = in_power - 3 + wind;
         end
     end
-    else if(current_player == PLAYER_1 && turn == PLAYER_2) begin
+    else if(current_player == PLAYER_1 && turn == 1) begin
         if(wind <= 3) begin
             speed_nxt = in_power - 3 + wind;
         end
@@ -47,7 +47,7 @@ always_comb begin
             speed_nxt = in_power - wind - 1;
         end
     end
-    else if(current_player == PLAYER_2 && turn == PLAYER_2)begin
+    else if(current_player == PLAYER_2 && turn == 1)begin
         if(wind <= 3) begin
             speed_nxt = power - 3 + wind;
         end

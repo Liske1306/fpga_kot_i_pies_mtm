@@ -5,7 +5,9 @@ module simulate(
     input  logic throw_flag,
     input  logic turn,
     input  logic [11:0] ypos_prebuff,
+    input  logic [1:0] current_player,
     input  logic [4:0] speed,
+
     output logic [6:0] hp_player1,
     output logic [6:0] hp_player2,
     output logic [11:0] ypos_particle,
@@ -20,7 +22,7 @@ logic [18:0] counter, counter_nxt;
 
 import variable_pkg::*;
 
-enum logic [2:0]{
+enum logic [1:0]{
     WAIT = 2'b00,
     THROW = 2'b01,
     HIT = 2'b10
@@ -50,9 +52,9 @@ end
 always_comb begin
     case(state)
         WAIT: begin
-            if(throw_flag == 1 || in_throw_flag == 1) begin
+            if(((throw_flag == 1) || (in_throw_flag == 1)) && ((current_player == PLAYER_1) || (current_player == PLAYER_2))) begin
                 state_nxt = THROW;
-                if(turn == PLAYER_1)begin
+                if((turn == 0) && (current_player == PLAYER_1))begin
                     xpos_particle_nxt = 262;
                 end
                 else begin
@@ -69,14 +71,14 @@ always_comb begin
             counter_nxt = '0;
         end
         THROW: begin
-            if((ypos_particle >= 455) &&  (ypos_particle <= 760)|| (xpos_particle >= 497) && (xpos_particle <= 527) && (ypos_particle >= 384)) begin
+            if((ypos_particle >= 455) &&  (ypos_particle <= 760) || (xpos_particle >= 497) && (xpos_particle <= 527) && (ypos_particle >= 384)) begin
                 state_nxt = HIT;
             end
             else begin
                 state_nxt = THROW;
             end
             if(counter >= (500000))begin
-                    if(turn == PLAYER_1)begin
+                    if(turn == 0)begin
                         xpos_particle_nxt = xpos_particle + speed;
                     end
                     else begin
@@ -93,7 +95,7 @@ always_comb begin
             hp_player2_nxt = hp_player2;
         end
         HIT: begin
-            if((turn == PLAYER_1) && (xpos_particle >= 712) && (xpos_particle <= 862)) begin
+            if((turn == 0) && (xpos_particle >= 712) && (xpos_particle <= 862)) begin
                 if((xpos_particle >= 762) && (xpos_particle <= 812)) begin
                     hp_player2_nxt = hp_player2 - 30;
                 end
@@ -102,7 +104,7 @@ always_comb begin
                 end
                 hp_player1_nxt = hp_player1;
             end
-            else if((turn == PLAYER_2) && (xpos_particle >= 112) && (xpos_particle <= 262)) begin
+            else if((turn == 1) && (xpos_particle >= 112) && (xpos_particle <= 262)) begin
                 if((xpos_particle >= 162) && (xpos_particle <= 212)) begin
                     hp_player1_nxt = hp_player1 - 30;
                 end

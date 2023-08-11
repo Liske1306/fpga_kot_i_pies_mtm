@@ -5,9 +5,12 @@ module turn_manager(
     input  logic rst,
     input  logic in_throw_flag,
     input  logic throw_flag,
+    input  logic [1:0] current_player,
 
     output logic [2:0] turn
 );
+
+import variable_pkg::*;
 
 logic [2:0] turn_nxt;
 
@@ -30,7 +33,7 @@ end
 always_comb begin
     case(state)
     WAIT: begin
-        if((throw_flag == 1) || (in_throw_flag == 1)) begin
+        if(((throw_flag == 1) || (in_throw_flag == 1)) && ((current_player == PLAYER_1) || (current_player == PLAYER_2))) begin
             state_nxt = UPDATE;
         end
         else begin
