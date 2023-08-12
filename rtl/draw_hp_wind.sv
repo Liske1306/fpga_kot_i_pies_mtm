@@ -36,18 +36,60 @@ always_ff @(posedge clk60MHz) begin
     end
 end
 
-always_comb begin          
-    if ((in.hcount >= HP_PLAYER1_XPOS - hp_player2*3)&&(in.hcount <= HP_PLAYER1_XPOS)&&(in.vcount >= HP_YPOS)&&(in.vcount <= HP_YPOS + HP_HEIGHT)) begin
+always_comb begin
+    if ((in.hcount == HP_PLAYER1_XPOS - 150)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount == HP_PLAYER2_XPOS + 150)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end         
+    else if ((in.hcount >= HP_PLAYER1_XPOS - hp_player2*3)&&(in.hcount <= HP_PLAYER1_XPOS)&&(in.vcount >= HP_YPOS)&&(in.vcount <= HP_YPOS + HP_HEIGHT)) begin
         rgb_nxt = 12'hf_7_7;
+    end
+    else if ((in.hcount >= HP_PLAYER1_XPOS)&&(in.hcount <= HP_PLAYER1_XPOS + 4)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= HP_PLAYER1_XPOS - 304)&&(in.hcount <= HP_PLAYER1_XPOS - 300)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= HP_PLAYER1_XPOS - 300)&&(in.hcount <= HP_PLAYER1_XPOS)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= HP_PLAYER1_XPOS - 300)&&(in.hcount <= HP_PLAYER1_XPOS)&&(in.vcount >= HP_YPOS + HP_HEIGHT)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
     end
     else if ((in.hcount >= HP_PLAYER2_XPOS)&&(in.hcount <= HP_PLAYER2_XPOS + hp_player1*3)&&(in.vcount >= HP_YPOS)&&(in.vcount <= HP_YPOS + HP_HEIGHT)) begin
         rgb_nxt = 12'hf_7_7;
     end
-    else if ((wind[2]==0)&&(in.hcount >= WIND_XPOS)&&(in.hcount <= WIND_XPOS + wind[1:0]*15)&&(in.vcount >= WIND_YPOS)&&(in.vcount <= WIND_YPOS + WIND_HEIGHT)) begin
-        rgb_nxt = 12'hf_7_7;
+    else if ((in.hcount >= HP_PLAYER2_XPOS + 300)&&(in.hcount <= HP_PLAYER2_XPOS + 304)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
     end
-    else if ((wind[2]==1)&&(in.hcount >= WIND_XPOS-wind[1:0]*15)&&(in.hcount <= WIND_XPOS)&&(in.vcount >= WIND_YPOS)&&(in.vcount <= WIND_YPOS + WIND_HEIGHT)) begin
+    else if ((in.hcount >= HP_PLAYER2_XPOS - 4)&&(in.hcount <= HP_PLAYER2_XPOS)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= HP_PLAYER2_XPOS)&&(in.hcount <= HP_PLAYER2_XPOS + 300)&&(in.vcount >= HP_YPOS - 5)&&(in.vcount <= HP_YPOS)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= HP_PLAYER2_XPOS)&&(in.hcount <= HP_PLAYER2_XPOS + 300)&&(in.vcount >= HP_YPOS + HP_HEIGHT)&&(in.vcount <= HP_YPOS + HP_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((wind[2]==0)&&(in.hcount >= WIND_XPOS)&&(in.hcount <= WIND_XPOS + wind[1:0]*15)&&(in.vcount >= WIND_YPOS)&&(in.vcount <= WIND_YPOS + WIND_HEIGHT)) begin
+        rgb_nxt = 12'hf_3_3;
+    end
+    else if ((wind[2]==1)&&(in.hcount >= WIND_XPOS - wind[1:0]*15)&&(in.hcount <= WIND_XPOS)&&(in.vcount >= WIND_YPOS)&&(in.vcount <= WIND_YPOS + WIND_HEIGHT)) begin
         rgb_nxt = 12'h3_3_f;
+    end
+    else if ((in.hcount >= WIND_XPOS + 45)&&(in.hcount <= WIND_XPOS + 49)&&(in.vcount >= WIND_YPOS - 5)&&(in.vcount <= WIND_YPOS + WIND_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= WIND_XPOS - 49)&&(in.hcount <= WIND_XPOS - 45)&&(in.vcount >= WIND_YPOS - 5)&&(in.vcount <= WIND_YPOS + WIND_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= WIND_XPOS - 45)&&(in.hcount <= WIND_XPOS + 45)&&(in.vcount >= WIND_YPOS - 5)&&(in.vcount <= WIND_YPOS)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= WIND_XPOS - 45)&&(in.hcount <= WIND_XPOS + 45)&&(in.vcount >= WIND_YPOS + WIND_HEIGHT)&&(in.vcount <= WIND_YPOS + WIND_HEIGHT + 5)) begin
+        rgb_nxt = 12'h0_0_0;
     end
     else begin
         rgb_nxt = in.rgb;

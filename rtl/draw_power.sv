@@ -39,8 +39,32 @@ always_comb begin
     if ((in.hcount >= POWER_PLAYER1_XPOS - power * 4)&&(in.hcount <= POWER_PLAYER1_XPOS)&&(in.vcount >= POWER_YPOS)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT)&&(current_player == PLAYER_1)) begin
         rgb_nxt = 12'he_a_2;
     end
+    else if ((in.hcount >= POWER_PLAYER1_XPOS)&&(in.hcount <= POWER_PLAYER1_XPOS + 4)&&(in.vcount >= POWER_YPOS - 4)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT + 4)&&(current_player == PLAYER_1)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= POWER_PLAYER1_XPOS - 128)&&(in.hcount <= POWER_PLAYER1_XPOS - 124)&&(in.vcount >= POWER_YPOS - 4)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT + 4)&&(current_player == PLAYER_1)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= POWER_PLAYER1_XPOS - 124)&&(in.hcount <= POWER_PLAYER1_XPOS)&&(in.vcount >= POWER_YPOS - 4)&&(in.vcount <= POWER_YPOS)&&(current_player == PLAYER_1)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= POWER_PLAYER1_XPOS - 124)&&(in.hcount <= POWER_PLAYER1_XPOS)&&(in.vcount >= POWER_YPOS + POWER_HEIGHT)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT + 4)&&(current_player == PLAYER_1)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
     else if ((in.hcount >= POWER_PLAYER2_XPOS)&&(in.hcount <= POWER_PLAYER2_XPOS + power * 4)&&(in.vcount >= POWER_YPOS)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT)&&(current_player == PLAYER_2)) begin
         rgb_nxt = 12'he_a_2;
+    end
+    else if ((in.hcount >= POWER_PLAYER2_XPOS - 4)&&(in.hcount <= POWER_PLAYER2_XPOS)&&(in.vcount >= POWER_YPOS - 4)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT + 4)&&(current_player == PLAYER_2)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= POWER_PLAYER2_XPOS + 124)&&(in.hcount <= POWER_PLAYER2_XPOS + 128)&&(in.vcount >= POWER_YPOS - 4)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT + 4)&&(current_player == PLAYER_2)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= POWER_PLAYER2_XPOS)&&(in.hcount <= POWER_PLAYER2_XPOS + 124)&&(in.vcount >= POWER_YPOS - 4)&&(in.vcount <= POWER_YPOS)&&(current_player == PLAYER_2)) begin
+        rgb_nxt = 12'h0_0_0;
+    end
+    else if ((in.hcount >= POWER_PLAYER2_XPOS)&&(in.hcount <= POWER_PLAYER2_XPOS + 124)&&(in.vcount >= POWER_YPOS + POWER_HEIGHT)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT + 4)&&(current_player == PLAYER_2)) begin
+        rgb_nxt = 12'h0_0_0;
     end
     else begin
         rgb_nxt = in.rgb;
