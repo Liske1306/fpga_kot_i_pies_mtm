@@ -1,8 +1,8 @@
 module set_speed(
     input  logic clk60MHz,
     input  logic rst,
-    input  logic [3:0] in_power,
-    input  logic [3:0] power,
+    input  logic [4:0] in_power,
+    input  logic [4:0] power,
     input  logic [2:0] wind,
     input  logic turn,
     input  logic [1:0] current_player,
@@ -23,36 +23,36 @@ always_ff @(posedge clk60MHz) begin
 end
 
 always_comb begin
-    if(current_player == PLAYER_1 && turn == 0) begin
-        if(wind <= 3) begin
-            speed_nxt = power - wind - 1;
+    if((current_player == PLAYER_1) && (turn == 0)) begin
+        if(wind[2]==1) begin
+            speed_nxt = in_power + wind[1:0];
         end
         else begin
-            speed_nxt = power - 3 + wind;
+            speed_nxt = in_power - wind[1:0];
         end
     end
-    else if(current_player == PLAYER_2 && turn == 0) begin
-        if(wind <= 3) begin
-            speed_nxt = in_power - wind - 1;
+    else if((current_player == PLAYER_2) && (turn == 0)) begin
+        if(wind[2]==1) begin
+            speed_nxt = power + wind[1:0];
         end
         else begin
-            speed_nxt = in_power - 3 + wind;
+            speed_nxt = power - wind[1:0];
         end
     end
-    else if(current_player == PLAYER_1 && turn == 1) begin
-        if(wind <= 3) begin
-            speed_nxt = in_power - 3 + wind;
+    else if((current_player == PLAYER_1) && (turn == 1)) begin
+        if(wind[2]==1) begin
+            speed_nxt = power - wind[1:0];
         end
         else begin
-            speed_nxt = in_power - wind - 1;
+            speed_nxt = power + wind[1:0];
         end
     end
-    else if(current_player == PLAYER_2 && turn == 1)begin
-        if(wind <= 3) begin
-            speed_nxt = power - 3 + wind;
+    else if((current_player == PLAYER_2) && (turn == 1))begin
+        if(wind[2]==1) begin
+            speed_nxt = in_power - wind[1:0];
         end
         else begin
-            speed_nxt = power - wind - 1;
+            speed_nxt = in_power + wind[1:0];
         end
     end
     else begin

@@ -55,8 +55,9 @@ set sv_files {
     ../rtl/draw_mouse.sv
     ../rtl/show_led.sv
     ../rtl/draw_particle.sv
-    ../rtl/draw_hp.sv
+    ../rtl/draw_hp_wind.sv
     ../rtl/draw_power.sv
+    ../rtl/win_loose.sv
     ../rtl/particle_rom.sv
     rtl/top_fpga.sv
 }

@@ -44,9 +44,9 @@ always_comb begin
             end
             else begin
                 state_nxt = WAIT;
-                ypos_prebuff_nxt = 768;
+                ypos_prebuff_nxt = 769;
             end
-            speed_nxt = 20;
+            speed_nxt = 22;
             counter_nxt = '0;
         end
         UP: begin

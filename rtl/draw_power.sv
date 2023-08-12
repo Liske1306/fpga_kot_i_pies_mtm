@@ -4,8 +4,8 @@ module draw_power(
     input  logic clk60MHz,
     input  logic rst,
 
-    input  logic [3:0] power,
-    input  logic current_player,
+    input  logic [4:0] power,
+    input  logic [1:0] current_player,
 
     vga_if.in in,
     vga_if.out out
@@ -26,8 +26,8 @@ always_ff @(posedge clk60MHz) begin
         out.rgb    <= '0;
     end else begin
         out.vcount <= in.vcount;
-        out.vsync <= in.vsync;
-        out.vblnk <= in.vblnk;
+        out.vsync  <= in.vsync;
+        out.vblnk  <= in.vblnk;
         out.hcount <= in.hcount;
         out.hsync  <= in.hsync;
         out.hblnk  <= in.hblnk;
@@ -36,10 +36,10 @@ always_ff @(posedge clk60MHz) begin
 end
 
 always_comb begin          
-    if ((in.hcount >= POWER_PLAYER1_XPOS - power*3)&&(in.hcount <= POWER_PLAYER1_XPOS)&&(in.vcount >= POWER_YPOS)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT)&&(current_player == PLAYER_1)) begin
+    if ((in.hcount >= POWER_PLAYER1_XPOS - power * 4)&&(in.hcount <= POWER_PLAYER1_XPOS)&&(in.vcount >= POWER_YPOS)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT)&&(current_player == PLAYER_1)) begin
         rgb_nxt = 12'he_a_2;
     end
-    else if ((in.hcount >= POWER_PLAYER2_XPOS)&&(in.hcount <= POWER_PLAYER2_XPOS + power*3)&&(in.vcount >= POWER_YPOS)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT)&&(current_player == PLAYER_2)) begin
+    else if ((in.hcount >= POWER_PLAYER2_XPOS)&&(in.hcount <= POWER_PLAYER2_XPOS + power * 4)&&(in.vcount >= POWER_YPOS)&&(in.vcount <= POWER_YPOS + POWER_HEIGHT)&&(current_player == PLAYER_2)) begin
         rgb_nxt = 12'he_a_2;
     end
     else begin

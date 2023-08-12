@@ -26,8 +26,8 @@ module top(
     output logic out_player1_ready,
     input  logic in_player2_ready,
     output logic out_player2_ready,
-    input  logic [3:0] in_power,
-    output logic [3:0] out_power,
+    input  logic [4:0] in_power,
+    output logic [4:0] out_power,
     input  logic in_throw_flag,
     output logic out_throw_flag,
     output logic [3:0] r,
@@ -41,10 +41,10 @@ module top(
 
 logic throw_flag;
 logic [1:0]current_player;
-logic left;
+logic left, win, loose;
 logic end_throw;
 logic [2:0] wind, turn;
-logic [3:0] power;
+logic [4:0] power;
 logic [4:0] speed;
 logic [6:0] hp_player1, hp_player2;
 logic [11:0] xpos, ypos, xpos_particle, ypos_particle, ypos_prebuff;
@@ -65,10 +65,11 @@ vga_if vga_if_particle();
 vga_if vga_if_hp();
 vga_if vga_if_power();
 vga_if vga_if_mouse();
+vga_if vga_if_win();
 
-assign vs = vga_if_mouse.vsync;
-assign hs = vga_if_mouse.hsync;
-assign {r,g,b} = vga_if_mouse.rgb;
+assign vs = vga_if_win.vsync;
+assign hs = vga_if_win.hsync;
+assign {r,g,b} = vga_if_win.rgb;
 assign out_throw_flag = throw_flag;
 assign out_power = power;
 
@@ -173,7 +174,9 @@ simulate u_simulate(
     .xpos_particle,
     .ypos_particle,
     .hp_player1,
-    .hp_player2
+    .hp_player2,
+    .win,
+    .loose
 );
 
 draw_background u_draw_background(
@@ -280,11 +283,12 @@ draw_particle u_draw_particle(
     .out (vga_if_particle)
 );
 
-draw_hp u_draw_hp(
+draw_hp_wind u_draw_hp_wind(
     .clk60MHz,
     .rst,
     .hp_player1,
     .hp_player2,
+    .wind,
     .in (vga_if_particle),
     .out (vga_if_hp)
 );
@@ -305,6 +309,15 @@ draw_mouse u_draw_mouse(
     .ypos,
     .in (vga_if_power),
     .out (vga_if_mouse)
+);
+
+win_loose u_win_loose(
+    .clk60MHz,
+    .rst,
+    .win,
+    .loose,
+    .in(vga_if_mouse),
+    .out(vga_if_win)
 );
 
 show_led u_show_led(

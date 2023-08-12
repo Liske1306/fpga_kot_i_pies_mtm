@@ -1,6 +1,6 @@
 package variable_pkg;
 
-// Parameters for VGA Display 1024 x 768 @ 60fps using a 40 MHz clock;
+// Parameters for VGA Display 1024 x 768 @ 60fps using a 60 MHz clock;
 localparam HOR_PIXELS = 1024;
 localparam HOR_BLANK_START = 1024;
 localparam HOR_BLANK_END = 1344;
@@ -49,6 +49,10 @@ localparam HP_PLAYER1_XPOS = 400;
 localparam HP_YPOS = 100;
 localparam HP_PLAYER2_XPOS = 624;
 localparam HP_HEIGHT = 20;
+
+localparam WIND_YPOS = 150;
+localparam WIND_XPOS = 512;
+localparam WIND_HEIGHT = 15;
 
 localparam POWER_PLAYER1_XPOS = 240;
 localparam POWER_YPOS = 320;

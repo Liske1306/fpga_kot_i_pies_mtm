@@ -20,6 +20,6 @@ always_ff @(posedge clk60MHz) begin
 end
 
 always_comb begin
-    wind_nxt = (2 * turn) + 3;
+    wind_nxt =(5 * turn) + 2;
 end
 endmodule

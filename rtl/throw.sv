@@ -8,13 +8,13 @@ module throw(
     input  logic [1:0] current_player,
     input  logic end_throw,
 
-    output logic [3:0] power,
+    output logic [4:0] power,
     output logic throw_flag
 );
 
 import variable_pkg::*;
 
-logic [3:0] power_nxt;
+logic [4:0] power_nxt;
 logic throw_flag_nxt;
 logic [22:0]counter_nxt, counter;
 
@@ -44,11 +44,12 @@ always_comb begin
         WAIT: begin
             if((left == 1) && (((turn == 0) && (current_player == PLAYER_1)) || ((turn == 1) && (current_player == PLAYER_2)))) begin
                 state_nxt = UPDATE;
+                power_nxt = '0;
             end
             else begin
                 state_nxt = WAIT;
+                power_nxt = power;
             end
-            power_nxt = '0;
             throw_flag_nxt = '0;
             counter_nxt = '0;
         end
@@ -76,19 +77,18 @@ always_comb begin
             if(end_throw == 1) begin
                 state_nxt = WAIT;
                 throw_flag_nxt = '0;
-                power_nxt = '0;
             end
             else begin
                 state_nxt = HOLD;
                 throw_flag_nxt = '1;
-                power_nxt = power;
             end
             counter_nxt = '0;
+            power_nxt = power;
         end
         default: begin
             state_nxt = WAIT;
             throw_flag_nxt = '0;
-            power_nxt = '0;
+            power_nxt = power;
             counter_nxt = '0;
         end
     endcase

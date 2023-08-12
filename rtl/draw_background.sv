@@ -20,7 +20,7 @@ always_ff @(posedge clk60MHz) begin
         out.hcount <= '0;
         out.hsync  <= '0;
         out.hblnk  <= '0;
-        out.rgb    <= '0;
+        out.rgb    <= in.rgb;
     end else begin
         out.vcount <= in.vcount;
         out.vsync <= in.vsync;
