@@ -2,14 +2,8 @@
  * Modified by:
  * 2023  AGH University of Science and Technology
  * MTM UEC2
- * Grzegorz Lis, Karolina Sawosz
+ * Author: Grzegorz Lis, Karolina Sawosz
  *
- * Description:
- * Top level synthesizable module including the project top and all the FPGA modules.
- * 
- * 27.06 GL - added declaration of the module and choose_player module
- * 28.06 KS - added turn manager module
- * 29.06 GL - added throw module, MouseCtl and bufor100_40
  */
 
  `timescale 1 ns / 1 ps

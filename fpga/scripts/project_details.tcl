@@ -33,32 +33,40 @@ set xdc_files {
 
 # Specify SystemVerilog design files location   -- EDIT
 set sv_files {
-    ../rtl/top.sv
-    ../rtl/variable_pkg.sv
-    ../rtl/choose_player.sv
-    ../rtl/set_wind.sv
-    ../rtl/throw.sv
-    ../rtl/simulate.sv
-    ../rtl/set_speed.sv
-    ../rtl/set_ypos.sv
-    ../rtl/turn_manager.sv
-    ../rtl/draw_background.sv
-    ../rtl/vga_if.sv
-    ../rtl/vga_timing.sv
-    ../rtl/cat_rom.sv
-    ../rtl/crate_rom.sv
-    ../rtl/dog_rom.sv
-    ../rtl/draw_cat.sv
-    ../rtl/draw_crate.sv
-    ../rtl/draw_dog.sv
-    ../rtl/draw_doghouse.sv
-    ../rtl/draw_mouse.sv
-    ../rtl/show_led.sv
-    ../rtl/draw_particle.sv
-    ../rtl/draw_hp_wind.sv
-    ../rtl/draw_power.sv
-    ../rtl/win_loose.sv
-    ../rtl/particle_rom.sv
+    #mechanics
+    ../rtl/mechanics/variable_pkg.sv
+    ../rtl/mechanics/choose_player.sv
+    ../rtl/mechanics/set_wind.sv
+    ../rtl/mechanics/throw.sv
+    ../rtl/mechanics/simulate.sv
+    ../rtl/mechanics/set_speed.sv
+    ../rtl/mechanics/set_ypos.sv
+    ../rtl/mechanics/turn_manager.sv
+    ../rtl/mechanics/win_loose.sv
+    ../rtl/mechanics/show_led.sv
+    #mechanics/vga
+    ../rtl/mechanics/vga/vga_if.sv
+    ../rtl/mechanics/vga/vga_timing.sv
+    #graphic_interface
+    ../rtl/graphic_interface/draw_background.sv
+    #graphic_interface/cat
+    ../rtl/graphic_interface/cat/cat_rom.sv
+    ../rtl/graphic_interface/cat/draw_cat.sv
+    #graphic_interface/crate_doghouse
+    ../rtl/graphic_interface/crate_doghouse/crate_rom.sv
+    ../rtl/graphic_interface/crate_doghouse/draw_crate.sv
+    ../rtl/graphic_interface/crate_doghouse/draw_doghouse.sv
+    #graphic_interface/dog
+    ../rtl/graphic_interface/dog/dog_rom.sv
+    ../rtl/graphic_interface/dog/draw_dog.sv
+    #graphic_interface/interface
+    ../rtl/graphic_interface/interface/draw_mouse.sv
+    ../rtl/graphic_interface/interface/draw_hp_wind.sv
+    ../rtl/graphic_interface/interface/draw_power.sv
+    #graphic_interface/particle
+    ../rtl/graphic_interface/particle/particle_rom.sv
+    ../rtl/graphic_interface/particle/draw_particle.sv
+    #top_fpga
     rtl/top_fpga.sv
 }
 
@@ -71,20 +79,20 @@ set verilog_files {
 # Specify VHDL design files location            -- EDIT
 set vhdl_files {
     rtl/Ps2Interface.vhd
-    ../rtl/MouseCtl.vhd
-    ../rtl/MouseDisplay.vhd
+    ../rtl/mechanics/vga/MouseCtl.vhd
+    ../rtl/mechanics/vga/MouseDisplay.vhd
 }
 
 # Specify files for a memory initialization     -- EDIT
  set mem_files {
-    ../rtl/crate.dat
-    ../rtl/cat.dat
-    ../rtl/cat1.dat
-    ../rtl/cat2.dat
-    ../rtl/cat3.dat
-    ../rtl/dog.dat
-    ../rtl/dog1.dat
-    ../rtl/dog2.dat
-    ../rtl/dog3.dat
-    ../rtl/particle.dat
+    ../rtl/img/crate.dat
+    ../rtl/img/cat.dat
+    ../rtl/img/cat1.dat
+    ../rtl/img/cat2.dat
+    ../rtl/img/cat3.dat
+    ../rtl/img/dog.dat
+    ../rtl/img/dog1.dat
+    ../rtl/img/dog2.dat
+    ../rtl/img/dog3.dat
+    ../rtl/img/particle.dat
  }

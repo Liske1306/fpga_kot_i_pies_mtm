@@ -1,3 +1,10 @@
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Grzegorz Lis
+ *
+ */
+
 module set_speed(
     input  logic clk60MHz,
     input  logic rst,

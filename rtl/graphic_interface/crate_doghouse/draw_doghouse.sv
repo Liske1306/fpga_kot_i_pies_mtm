@@ -1,6 +1,13 @@
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Karolina Sawosz
+ *
+ */
+
 `timescale 1 ns / 1 ps
 
-module draw_crate(
+module draw_doghouse(
     input  logic clk60MHz,
     input  logic rst,
 
@@ -64,7 +71,7 @@ end
 
 always_comb begin
     if(!vblnk_temp && !hblnk_temp) begin
-        if((hcount_temp >= HOR_CRATE_POSITION)&&(hcount_temp < HOR_CRATE_POSITION + PLAYER_WIDTH)&&(vcount_temp >= VER_CRATE_POSITION)&&(vcount_temp < VER_CRATE_POSITION + PLAYER_HEIGHT)) begin
+        if((hcount_temp >= HOR_DOGHOUSE_POSITION)&&(hcount_temp < HOR_DOGHOUSE_POSITION + PLAYER_WIDTH)&&(vcount_temp >= VER_DOGHOUSE_POSITION)&&(vcount_temp < VER_DOGHOUSE_POSITION + PLAYER_HEIGHT)) begin
             rgb_nxt = rgb_pixel;
         end
         else begin
@@ -76,8 +83,8 @@ always_comb begin
     end
 end
 
-assign addry = in.vcount - VER_CRATE_POSITION;
-assign addrx = in.hcount - HOR_CRATE_POSITION;
+assign addry = in.vcount - VER_DOGHOUSE_POSITION;
+assign addrx = in.hcount - HOR_DOGHOUSE_POSITION;
 assign pixel_addr = {addry[5:0], addrx[5:0]};
 
 endmodule

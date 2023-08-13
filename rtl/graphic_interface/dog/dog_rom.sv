@@ -1,4 +1,11 @@
-module cat_rom (
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Robert Szczygiel
+ * Modified: Piotr Kaczmarczyk, Karolina Sawosz
+ */
+
+module dog_rom (
     input  logic clk60MHz,
     input  logic [11:0] address,  // address = {addry[5:0], addrx[5:0]}
     input  logic [11:0] address1,  // address = {addry[5:0], addrx[5:0]}
@@ -27,10 +34,10 @@ reg [11:0] rom3 [0:4095];
 
 /* Relative path from the simulation or synthesis working directory */
 initial begin
-    $readmemh("../rtl/cat.dat", rom);
-    $readmemh("../rtl/cat1.dat", rom1);
-    $readmemh("../rtl/cat2.dat", rom2);
-    $readmemh("../rtl/cat3.dat", rom3);
+    $readmemh("../rtl/dog.dat", rom);
+    $readmemh("../rtl/dog1.dat", rom1);
+    $readmemh("../rtl/dog2.dat", rom2);
+    $readmemh("../rtl/dog3.dat", rom3);
 end
 
 

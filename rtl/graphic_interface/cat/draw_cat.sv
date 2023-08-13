@@ -1,6 +1,13 @@
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Karolina Sawosz
+ *
+ */
+
 `timescale 1 ns / 1 ps
 
-module draw_dog(
+module draw_cat(
     input  logic clk60MHz,
     input  logic rst,
 
@@ -70,16 +77,16 @@ end
 
 always_comb begin
     if(!vblnk_temp && !hblnk_temp) begin
-        if((hcount_temp >= HOR_DOG_POSITION)&&(hcount_temp < HOR_DOG_POSITION + PLAYER_WIDTH1)&&(vcount_temp >= VER_DOG_POSITION)&&(vcount_temp < VER_DOG_POSITION + PLAYER_HEIGHT1)) begin
+        if((hcount_temp >= HOR_CAT_POSITION)&&(hcount_temp < HOR_CAT_POSITION + PLAYER_WIDTH1)&&(vcount_temp >= VER_CAT_POSITION)&&(vcount_temp < VER_CAT_POSITION + PLAYER_HEIGHT1)) begin
             rgb_nxt = rgb_pixel;
         end
-        else if((hcount_temp >= HOR_DOG_POSITION1)&&(hcount_temp < HOR_DOG_POSITION1 + PLAYER_WIDTH1)&&(vcount_temp >= VER_DOG_POSITION1)&&(vcount_temp < VER_DOG_POSITION1 + PLAYER_HEIGHT1)) begin
+        else if((hcount_temp >= HOR_CAT_POSITION1)&&(hcount_temp < HOR_CAT_POSITION1 + PLAYER_WIDTH1)&&(vcount_temp >= VER_CAT_POSITION1)&&(vcount_temp < VER_CAT_POSITION1 + PLAYER_HEIGHT1)) begin
             rgb_nxt = rgb_pixel1;
         end
-        else if((hcount_temp >= HOR_DOG_POSITION2)&&(hcount_temp < HOR_DOG_POSITION2 + PLAYER_WIDTH1)&&(vcount_temp >= VER_DOG_POSITION2)&&(vcount_temp < VER_DOG_POSITION2 + PLAYER_HEIGHT1)) begin
+        else if((hcount_temp >= HOR_CAT_POSITION2)&&(hcount_temp < HOR_CAT_POSITION2 + PLAYER_WIDTH1)&&(vcount_temp >= VER_CAT_POSITION2)&&(vcount_temp < VER_CAT_POSITION2 + PLAYER_HEIGHT1)) begin
             rgb_nxt = rgb_pixel2;
         end
-        else if((hcount_temp >= HOR_DOG_POSITION3)&&(hcount_temp < HOR_DOG_POSITION3 + PLAYER_WIDTH1)&&(vcount_temp >= VER_DOG_POSITION3)&&(vcount_temp < VER_DOG_POSITION3 + PLAYER_HEIGHT1)) begin
+        else if((hcount_temp >= HOR_CAT_POSITION3)&&(hcount_temp < HOR_CAT_POSITION3 + PLAYER_WIDTH1)&&(vcount_temp >= VER_CAT_POSITION3)&&(vcount_temp < VER_CAT_POSITION3 + PLAYER_HEIGHT1)) begin
             rgb_nxt = rgb_pixel3;
         end
         else begin
@@ -91,20 +98,20 @@ always_comb begin
     end
 end
 
-assign addry = in.vcount - VER_DOG_POSITION;
-assign addrx = in.hcount - HOR_DOG_POSITION;
+assign addry = in.vcount - VER_CAT_POSITION;
+assign addrx = in.hcount - HOR_CAT_POSITION;
 assign pixel_addr = {addry[5:0], addrx[5:0]};
 
-assign addry1 = in.vcount - VER_DOG_POSITION1;
-assign addrx1 = in.hcount - HOR_DOG_POSITION1;
+assign addry1 = in.vcount - VER_CAT_POSITION1;
+assign addrx1 = in.hcount - HOR_CAT_POSITION1;
 assign pixel_addr1 = {addry1[5:0], addrx1[5:0]};
 
-assign addry2 = in.vcount - VER_DOG_POSITION2;
-assign addrx2 = in.hcount - HOR_DOG_POSITION2;
+assign addry2 = in.vcount - VER_CAT_POSITION2;
+assign addrx2 = in.hcount - HOR_CAT_POSITION2;
 assign pixel_addr2 = {addry2[5:0], addrx2[5:0]};
 
-assign addry3 = in.vcount - VER_DOG_POSITION3;
-assign addrx3 = in.hcount - HOR_DOG_POSITION3;
+assign addry3 = in.vcount - VER_CAT_POSITION3;
+assign addrx3 = in.hcount - HOR_CAT_POSITION3;
 assign pixel_addr3 = {addry3[5:0], addrx3[5:0]};
 
 endmodule

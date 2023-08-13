@@ -1,3 +1,10 @@
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Karolina Sawosz
+ *
+ */
+
 interface vga_if;
     logic [10:0] vcount;
     logic        vsync;

@@ -1,3 +1,10 @@
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Robert Szczygiel
+ * Modified: Piotr Kaczmarczyk, Karolina Sawosz
+ */
+
 module particle_rom(
     input  logic clk60MHz,
     input  logic [11:0] address,  // address = {addry[5:0], addrx[5:0]}

@@ -1,3 +1,10 @@
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Grzegorz Lis, Karolina Sawosz
+ *
+ */
+
 package variable_pkg;
 
 // Parameters for VGA Display 1024 x 768 @ 60fps using a 60 MHz clock;

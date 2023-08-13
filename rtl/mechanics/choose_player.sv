@@ -1,3 +1,10 @@
+/**
+ * Copyright (C) 2023  AGH University of Science and Technology
+ * MTM UEC2
+ * Author: Grzegorz Lis
+ *
+ */
+
 `timescale 1 ns / 1 ps
 
 module choose_player(

@@ -1,15 +1,8 @@
 /**
- * San Jose State University
- * EE178 Lab #4
- * Author: prof. Eric Crabilla
- *
- * Modified by:
  * 2023  AGH University of Science and Technology
  * MTM UEC2
- * Piotr Kaczmarczyk
+ * Author: Grzegorz Lis
  *
- * Description:
- * Top level synthesizable module including the project top and all the FPGA-referred modules.
  */
 
 `timescale 1 ns / 1 ps
