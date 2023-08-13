@@ -34,10 +34,10 @@ reg [11:0] rom3 [0:4095];
 
 /* Relative path from the simulation or synthesis working directory */
 initial begin
-    $readmemh("../rtl/dog.dat", rom);
-    $readmemh("../rtl/dog1.dat", rom1);
-    $readmemh("../rtl/dog2.dat", rom2);
-    $readmemh("../rtl/dog3.dat", rom3);
+    $readmemh("../../img/dog.dat", rom);
+    $readmemh("../../img/dog1.dat", rom1);
+    $readmemh("../../img/dog2.dat", rom2);
+    $readmemh("../../img/dog3.dat", rom3);
 end
 
 

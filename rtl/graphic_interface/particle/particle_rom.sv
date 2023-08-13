@@ -24,7 +24,7 @@ reg [11:0] rom [0:4095];
  */
 
 /* Relative path from the simulation or synthesis working directory */
-initial $readmemh("../rtl/particle.dat", rom);
+initial $readmemh("../../img/particle.dat", rom);
 
 
 /**

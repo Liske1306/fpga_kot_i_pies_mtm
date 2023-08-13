@@ -33,7 +33,7 @@ set xdc_files {
 
 # Specify SystemVerilog design files location   -- EDIT
 set sv_files {
-    #mechanics
+    ../rtl/top.sv
     ../rtl/mechanics/variable_pkg.sv
     ../rtl/mechanics/choose_player.sv
     ../rtl/mechanics/set_wind.sv
@@ -44,29 +44,21 @@ set sv_files {
     ../rtl/mechanics/turn_manager.sv
     ../rtl/mechanics/win_loose.sv
     ../rtl/mechanics/show_led.sv
-    #mechanics/vga
     ../rtl/mechanics/vga/vga_if.sv
     ../rtl/mechanics/vga/vga_timing.sv
-    #graphic_interface
     ../rtl/graphic_interface/draw_background.sv
-    #graphic_interface/cat
     ../rtl/graphic_interface/cat/cat_rom.sv
     ../rtl/graphic_interface/cat/draw_cat.sv
-    #graphic_interface/crate_doghouse
     ../rtl/graphic_interface/crate_doghouse/crate_rom.sv
     ../rtl/graphic_interface/crate_doghouse/draw_crate.sv
     ../rtl/graphic_interface/crate_doghouse/draw_doghouse.sv
-    #graphic_interface/dog
     ../rtl/graphic_interface/dog/dog_rom.sv
     ../rtl/graphic_interface/dog/draw_dog.sv
-    #graphic_interface/interface
     ../rtl/graphic_interface/interface/draw_mouse.sv
     ../rtl/graphic_interface/interface/draw_hp_wind.sv
     ../rtl/graphic_interface/interface/draw_power.sv
-    #graphic_interface/particle
     ../rtl/graphic_interface/particle/particle_rom.sv
     ../rtl/graphic_interface/particle/draw_particle.sv
-    #top_fpga
     rtl/top_fpga.sv
 }
 
