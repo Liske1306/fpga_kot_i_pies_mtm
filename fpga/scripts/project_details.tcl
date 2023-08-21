@@ -43,7 +43,6 @@ set sv_files {
     ../rtl/mechanics/set_ypos.sv
     ../rtl/mechanics/turn_manager.sv
     ../rtl/mechanics/win_loose.sv
-    ../rtl/mechanics/show_led.sv
     ../rtl/mechanics/vga/vga_if.sv
     ../rtl/mechanics/vga/vga_timing.sv
     ../rtl/graphic_interface/draw_background.sv

@@ -13,7 +13,6 @@ module top(
     input  logic rst,
     input  logic player1_choose,
     input  logic player2_choose,
-    output  logic [3:0] ledy,
     output logic player1_led,
     output logic player2_led,
     input  logic in_player1_ready,
@@ -312,15 +311,6 @@ win_loose u_win_loose(
     .loose,
     .in(vga_if_mouse_win),
     .out(vga_if_win_out)
-);
-
-show_led u_show_led(
-    .clk60MHz,
-    .rst,
-    .turn(turn[0]),
-    .left,
-    .throw_flag,
-    .led(ledy[3:0])
 );
 
 endmodule
