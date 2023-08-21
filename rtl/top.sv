@@ -49,21 +49,21 @@ logic [11:0] rgb_crate, rgb_doghouse, rgb_particle;
 logic [11:0] rgb_cat, rgb_cat1, rgb_cat2, rgb_cat3;
 logic [11:0] rgb_dog, rgb_dog1, rgb_dog2, rgb_dog3;
 
-vga_if vga_if_timing();
-vga_if vga_if_background();
-vga_if vga_if_cat();
-vga_if vga_if_crate();
-vga_if vga_if_dog();
-vga_if vga_if_doghouse();
-vga_if vga_if_particle();
-vga_if vga_if_hp();
-vga_if vga_if_power();
-vga_if vga_if_mouse();
-vga_if vga_if_win();
+vga_if vga_if_timing_bg();
+vga_if vga_if_bg_cat();
+vga_if vga_if_cat_crate();
+vga_if vga_if_crate_dog();
+vga_if vga_if_dog_doghouse();
+vga_if vga_if_doghouse_particle();
+vga_if vga_if_particle_hp();
+vga_if vga_if_hp_power();
+vga_if vga_if_power_mouse();
+vga_if vga_if_mouse_win();
+vga_if vga_if_win_out();
 
-assign vs = vga_if_win.vsync;
-assign hs = vga_if_win.hsync;
-assign {r,g,b} = vga_if_win.rgb;
+assign vs = vga_if_win_out.vsync;
+assign hs = vga_if_win_out.hsync;
+assign {r,g,b} = vga_if_win_out.rgb;
 assign out_throw_flag = throw_flag;
 assign out_power = power;
 
@@ -131,7 +131,7 @@ throw u_throw(
 vga_timing u_vga_timing(
     .clk60MHz,
     .rst,
-    .out(vga_if_timing)
+    .out(vga_if_timing_bg)
 );
 
 set_speed u_set_speed(
@@ -176,8 +176,8 @@ simulate u_simulate(
 draw_background u_draw_background(
     .clk60MHz,
     .rst,
-    .in(vga_if_timing),
-    .out(vga_if_background)
+    .in(vga_if_timing_bg),
+    .out(vga_if_bg_cat)
 );
 
 cat_rom u_cat_rom(
@@ -203,8 +203,8 @@ draw_cat u_draw_cat(
     .pixel_addr1(address_cat1),
     .pixel_addr2(address_cat2),
     .pixel_addr3(address_cat3),
-    .in(vga_if_background),
-    .out(vga_if_cat)
+    .in(vga_if_bg_cat),
+    .out(vga_if_cat_crate)
 );
 
 crate_rom u_crate_rom(
@@ -220,8 +220,8 @@ draw_crate u_draw_crate(
     .rst,
     .rgb_pixel(rgb_crate),
     .pixel_addr(address_crate),
-    .in(vga_if_cat),
-    .out(vga_if_crate)
+    .in(vga_if_cat_crate),
+    .out(vga_if_crate_dog)
 );
 
 dog_rom u_dog_rom(
@@ -247,8 +247,8 @@ draw_dog u_draw_dog(
     .pixel_addr1(address_dog1),
     .pixel_addr2(address_dog2),
     .pixel_addr3(address_dog3),
-    .in(vga_if_crate),
-    .out(vga_if_dog)
+    .in(vga_if_crate_dog),
+    .out(vga_if_dog_doghouse)
 );
 
 draw_doghouse u_draw_doghouse(
@@ -256,8 +256,8 @@ draw_doghouse u_draw_doghouse(
     .rst,
     .rgb_pixel(rgb_doghouse),
     .pixel_addr(address_doghouse),
-    .in(vga_if_dog),
-    .out(vga_if_doghouse)
+    .in(vga_if_dog_doghouse),
+    .out(vga_if_doghouse_particle)
 );
 
 particle_rom u_particle_rom(
@@ -273,8 +273,8 @@ draw_particle u_draw_particle(
     .ypos_particle,
     .rgb_pixel(rgb_particle),
     .pixel_addr(address_particle),
-    .in (vga_if_doghouse),
-    .out (vga_if_particle)
+    .in (vga_if_doghouse_particle),
+    .out (vga_if_particle_hp)
 );
 
 draw_hp_wind u_draw_hp_wind(
@@ -283,8 +283,8 @@ draw_hp_wind u_draw_hp_wind(
     .hp_player1,
     .hp_player2,
     .wind,
-    .in (vga_if_particle),
-    .out (vga_if_hp)
+    .in (vga_if_particle_hp),
+    .out (vga_if_hp_power)
 );
 
 draw_power u_draw_power(
@@ -292,8 +292,8 @@ draw_power u_draw_power(
     .rst,
     .power,
     .current_player,
-    .in (vga_if_hp),
-    .out (vga_if_power)
+    .in (vga_if_hp_power),
+    .out (vga_if_power_mouse)
 );
 
 draw_mouse u_draw_mouse(
@@ -301,8 +301,8 @@ draw_mouse u_draw_mouse(
     .rst,
     .xpos,
     .ypos,
-    .in (vga_if_power),
-    .out (vga_if_mouse)
+    .in (vga_if_power_mouse),
+    .out (vga_if_mouse_win)
 );
 
 win_loose u_win_loose(
@@ -310,8 +310,8 @@ win_loose u_win_loose(
     .rst,
     .win,
     .loose,
-    .in(vga_if_mouse),
-    .out(vga_if_win)
+    .in(vga_if_mouse_win),
+    .out(vga_if_win_out)
 );
 
 show_led u_show_led(
