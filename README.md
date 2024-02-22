@@ -1,4 +1,4 @@
-# kot_i_pies_mtm
+# fpga_kot_i_pies_mtm
 
 Projekt zawiera grę Kot i Pies, która polega na rzucaniu w przeciwnika przedmiotem do momentu pozbawienia go punktów życia. Projekt wyświetla się synchronicznie na obu monitorach.
 
